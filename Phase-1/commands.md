@@ -1,145 +1,192 @@
-Phase 1 — Raw Kali Commands
+┌──(kali㉿kali)-[~]
+└─$ sudo -i
+[sudo] password for kali:
 
-The following commands and outputs document the practical work performed during Phase 1 on Kali Linux.
+┌──(root㉿kali)-[~]
+└─# mkdir -p /opt/company
 
-1. Create company directories
+┌──(root㉿kali)-[~]
+└─# mkdir /opt/company/IT /opt/company/HR /opt/company/Sales /opt/company/Shared
 
-sudo -i
-mkdir -p /opt/company
-mkdir /opt/company/IT /opt/company/HR /opt/company/Sales /opt/company/Shared
+┌──(root㉿kali)-[~]
+└─# groupadd IT
+groupadd: group 'IT' already exists
 
-2. Create groups
+┌──(root㉿kali)-[~]
+└─# groupadd HR
+groupadd: group 'HR' already exists
 
-groupadd IT
-groupadd HR
-groupadd Sales
-groupadd company
+┌──(root㉿kali)-[~]
+└─# groupadd Sales
 
-Some groups already existed during the lab.
+┌──(root㉿kali)-[~]
+└─# groupadd company
+groupadd: group 'company' already exists
 
-3. Create users
+┌──(root㉿kali)-[~]
+└─# useradd -m ituser
+useradd: user 'ituser' already exists
 
-useradd -m ituser
-useradd -m hruser
-useradd -m Salesuser
+┌──(root㉿kali)-[~]
+└─# useradd -m hruser
+useradd: user 'hruser' already exists
 
-Some users already existed during the lab.
+┌──(root㉿kali)-[~]
+└─# useradd -m Salesuser
 
-4. Add users to groups
+┌──(root㉿kali)-[~]
+└─# usermod -aG IT,company ituser
 
-usermod -aG IT,company ituser
-usermod -aG HR,company hruser
-usermod -aG Sales,company Salesuser
+┌──(root㉿kali)-[~]
+└─# usermod -aG HR,company hruser
 
-5. Set passwords
+┌──(root㉿kali)-[~]
+└─# usermod -aG Sales,company Salesuser
 
-passwd ituser
-passwd hruser
-passwd Salesuser
+┌──(root㉿kali)-[~]
+└─# passwd ituser
+New password:
+Retype new password:
+passwd: password updated successfully
 
-6. Verify users and groups
+┌──(root㉿kali)-[~]
+└─# passwd hruser
+New password:
+Retype new password:
+passwd: password updated successfully
 
-id ituser
-id hruser
-id Salesuser
+┌──(root㉿kali)-[~]
+└─# passwd Salesuser
+New password:
+Retype new password:
+passwd: password updated successfully
 
-getent group IT
-getent group HR
-getent group Sales
-getent group company
+┌──(root㉿kali)-[~]
+└─# id ituser
+uid=1001(ituser) gid=1001(ituser) groups=1001(ituser),100(users),1004(IT),1007(company)
 
-7. Configure ownership and permissions
+┌──(root㉿kali)-[~]
+└─# id hruser
+uid=1003(hruser) gid=1003(hruser) groups=1003(hruser),100(users),1005(HR),1007(company)
 
-chown root /opt/company/IT
-chown root /opt/company/HR
-chown root /opt/company/Sales
-chown root /opt/company/Shared
+┌──(root㉿kali)-[~]
+└─# id Salesuser
+uid=1004(Salesuser) gid=1009(Salesuser) groups=1009(Salesuser),1007(company),1008(Sales)
 
-chmod 2770 /opt/company/IT
-chmod 2770 /opt/company/HR
-chmod 2770 /opt/company/Sales
-chmod 2770 /opt/company/Shared
+┌──(root㉿kali)-[~]
+└─# getent group IT
+IT:x:1004
 
-8. Verify directory permissions
+┌──(root㉿kali)-[~]
+└─# getent group HR
+HR:x:1005
 
-ls -ld /opt/company/*
+┌──(root㉿kali)-[~]
+└─# getent group Sales
+Sales:x:1008
 
-Expected final structure observed during the lab:
+┌──(root㉿kali)-[~]
+└─# getent group company
+company:x:1007,hruser,salesuser,Salesuser
 
-drwxrws--- 2 root HR      ... /opt/company/HR
-drwxrws--- 2 root IT      ... /opt/company/IT
-drwxrws--- 2 root Sales   ... /opt/company/Sales
-drwxrws--- 2 root company ... /opt/company/Shared
+┌──(root㉿kali)-[~]
+└─# chown root /opt/company/IT
 
-9. Test user access
+┌──(root㉿kali)-[~]
+└─# chown root /opt/company/HR
 
-sudo -u ituser ls /opt/company/IT
-sudo -u ituser ls /opt/company/HR
+┌──(root㉿kali)-[~]
+└─# chown root /opt/company/HR
 
-sudo -u hruser ls /opt/company/HR
-sudo -u hruser ls /opt/company/IT
+┌──(root㉿kali)-[~]
+└─#
 
-sudo -u Salesuser ls /opt/company/Sales
-sudo -u Salesuser ls /opt/company/IT
+┌──(root㉿kali)-[~]
+└─# ls -ld /opt/company/HR /opt/company/Sales
+drwxr-xr-x 2 root Sales 4096 Sep 14 13:19 /opt/company/HR
+drwxr-xr-x 2 root root  4096 Sep 14 13:19 /opt/company/Sales
 
-sudo -u ituser ls /opt/company/Shared
-sudo -u hruser ls /opt/company/Shared
-sudo -u Salesuser ls /opt/company/Shared
+┌──(root㉿kali)-[~]
+└─# chown root /opt/company/HR
 
-The department access tests confirmed that users could access their assigned department directory and that unauthorized department access returned Permission denied.
+┌──(root㉿kali)-[~]
+└─# chown root /opt/company/Sales
 
-10. Test write access
+┌──(root㉿kali)-[~]
+└─# chown root /opt/company/IT
 
-sudo -u ituser touch /opt/company/IT/test.txt
-ls -l /opt/company/IT/test.txt
-rm /opt/company/IT/test.txt
+┌──(root㉿kali)-[~]
+└─# chown root /opt/company/Shared
 
-The file was successfully created with ownership:
+┌──(root㉿kali)-[~]
+└─# chmod 2770 /opt/company/IT
 
--rw-rw-r-- 1 ituser IT ... test.txt
+┌──(root㉿kali)-[~]
+└─# chmod 2770 /opt/company/HR
 
-11. Additional permission verification
+┌──(root㉿kali)-[~]
+└─# chmod 2770 /opt/company/Sales
 
-getfacl /opt/company/IT
+┌──(root㉿kali)-[~]
+└─# chmod 2770 /opt/company/Shared
 
-Result included:
+┌──(root㉿kali)-[~]
+└─# ls -ld /opt/company/*
+drwxrws--- 2 root HR      4096 Sep 14 13:19 /opt/company/HR
+drwxrws--- 2 root IT      4096 Sep 14 13:19 /opt/company/IT
+drwxrws--- 2 root Sales   4096 Sep 14 13:19 /opt/company/Sales
+drwxrws--- 2 root company 4096 Sep 14 13:19 /opt/company/Shared
 
-owner: root
-group: IT
-user::rwx
-group::rwx
-other::---
+┌──(root㉿kali)-[~]
+└─# sudo -u ituser ls /opt/company/IT
 
-12. Troubleshooting examples
+┌──(root㉿kali)-[~]
+└─# sudo -u ituser ls /opt/company/HR
+ls: cannot open directory '/opt/company/HR': Permission denied
 
-A typo was made when trying to use usermod:
+┌──(root㉿kali)-[~]
+└─# sudo -u hruser ls /opt/company/HR
 
-sudo usermd -aG IT salesuser
+┌──(root㉿kali)-[~]
+└─# sudo -u hruser ls /opt/company/IT
+ls: cannot open directory '/opt/company/IT': Permission denied
 
-Result:
+┌──(root㉿kali)-[~]
+└─# sudo -u Salesuser ls /opt/company/Sales
 
-sudo: usermd: command not found
+┌──(root㉿kali)-[~]
+└─# sudo -u Salesuser ls /opt/company/IT
+ls: cannot open directory '/opt/company/IT': Permission denied
 
-The correct command was located with:
+┌──(root㉿kali)-[~]
+└─# sudo -u ituser ls /opt/company/Shared
 
-which usermod
+┌──(root㉿kali)-[~]
+└─# sudo -u hruser ls /opt/company/Shared
 
-Result:
+┌──(root㉿kali)-[~]
+└─# sudo -u Salesuser ls /opt/company/Shared
 
-/usr/sbin/usermod
+┌──(root㉿kali)-[~]
+└─# sudo -u ituser touch /opt/company/IT/test.txt
 
-Then the command was executed using:
+┌──(root㉿kali)-[~]
+└─# ls -l /opt/company/IT/test.txt
+-rw-rw-r-- 1 ituser IT 0 Sep 14 15:32 /opt/company/IT/test.txt
 
-sudo /usr/sbin/usermod -aG IT salesuser
+┌──(root㉿kali)-[~]
+└─# rm /opt/company/IT/test.txt
 
-Another path typo occurred:
-
-ls -ld /company/*
-
-Result:
-
+┌──(root㉿kali)-[~]
+└─# ls -ld /company/*
 ls: cannot access '/company/*': No such file or directory
 
-The correct path was:
+┌──(root㉿kali)-[~]
+└─# ls -ld /opt/company/*
+drwxrws--- 2 root HR      4096 Sep 14 13:19 /opt/company/HR
+drwxrws--- 2 root IT      4096 Sep 14 15:37 /opt/company/IT
+drwxrws--- 2 root Sales   4096 Sep 14 13:19 /opt/company/Sales
+drwxrws--- 2 root company 4096 Sep 14 13:19 /opt/company/Shared
 
-ls -ld /opt/company/*
+┌──(root㉿kali)-[~]
+└─#
