@@ -188,5 +188,4 @@ drwxrws--- 2 root IT      4096 Sep 14 15:37 /opt/company/IT
 drwxrws--- 2 root Sales   4096 Sep 14 13:19 /opt/company/Sales
 drwxrws--- 2 root company 4096 Sep 14 13:19 /opt/company/Shared
 
-┌──(root㉿kali)-[~]
-└─#
+
