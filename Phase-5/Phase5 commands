@@ -1,0 +1,45 @@
+Phase 5 — Linux Security Checks
+
+Check SSH root login configuration
+
+sudo grep PermitRootLogin /etc/ssh/sshd_config
+
+Check if SSH is enabled
+
+sudo systemctl is-enabled ssh
+
+Check if SSH is active
+
+sudo systemctl is-active ssh
+
+List currently running services
+
+sudo systemctl list-units –type=service –state=running
+
+Check for world-writable files directly under /etc
+
+sudo find /etc -maxdepth 1 -type f -perm -002 -ls
+
+Test access with an incorrect username
+
+sudo -u saleuder ls /opt/company/IT
+
+Test access with salesuser
+
+sudo -u salesuser ls /opt/company/IT
+
+Troubleshooting: incorrect usermod command
+
+sudo usermd -aG IT salesuser
+
+Find the correct usermod path
+
+which usermod
+
+Add salesuser to the IT group using the correct path
+
+sudo /usr/sbin/usermod -aG IT salesuser
+
+Verify salesuser group membership
+
+id salesuser
