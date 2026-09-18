@@ -1,181 +1,190 @@
-````markdown
 # Phase 3 — SSH Service & Remote Access
+
+> **Status:** ✅ Completed & verified on Kali Linux  
+> **Service:** OpenSSH  
+> **Default port:** `22/tcp`
 
 ## Objective
 
-The objective of this phase was to install, enable, manage, and test the SSH service on Kali Linux.
+Install, enable, manage, test, and perform basic security verification of the SSH service on Kali Linux.
 
-## Practical Commands
+## Lab Overview
 
-The following commands were used during the practical lab.
+| Item | Details |
+| --- | --- |
+| Operating system | Kali Linux |
+| Service | OpenSSH Server (`sshd`) |
+| Protocol | SSH |
+| Default port | `22/tcp` |
+| Final state | Enabled and active |
+| Connection test | `ssh localhost` |
+| Test user | `kali` |
 
-### 1. Check OpenSSH Installation
+## Procedure
+
+### 1. Install OpenSSH Server
+
+Install the OpenSSH server package. If it is already installed, the package manager confirms that it is up to date.
 
 ```bash
-# Check OpenSSH server installation
 sudo apt install openssh-server
 ```
 
-**Result:**
+**Expected result:**
 
 ```text
 openssh-server is already the newest version
 ```
 
-### 2. Enable and Start SSH
+### 2. Enable and Start the Service
+
+Enable SSH to start automatically at boot and start it immediately.
 
 ```bash
-# Enable and start the SSH service
 sudo systemctl enable --now ssh
 ```
 
-### 3. Check if SSH Is Active
+### 3. Verify the Service State
+
+Confirm that the service is currently active.
 
 ```bash
-# Check if the SSH service is active
 systemctl is-active ssh
 ```
 
-**Result:**
+**Expected result:**
 
 ```text
 active
 ```
 
-### 4. Check SSH Service Status
+### 4. Inspect the SSH Service
+
+Display the detailed service status and verify that SSH is listening on port `22`.
 
 ```bash
-# Check SSH service status
 sudo systemctl status ssh
 ```
 
-The service was running and listening on port `22`.
+### 5. Test a Local SSH Connection
 
-### 5. Test SSH Connection
+Connect to the local machine through SSH.
 
 ```bash
-# Test a local SSH connection
 ssh localhost
 ```
 
-### 6. Verify the Current User
-
-After connecting through SSH, the current user was verified:
+After connecting, verify the authenticated user:
 
 ```bash
-# Check the current user
 whoami
 ```
 
-**Result:**
+**Expected result:**
 
 ```text
 kali
 ```
 
-### 7. Exit the SSH Session
+Exit the SSH session:
 
 ```bash
-# Exit the SSH session
 exit
 ```
 
-### 8. Stop the SSH Service
+## Service Management Tests
 
-The SSH service was stopped to verify service management:
+### Stop the SSH Service
 
 ```bash
-# Stop the SSH service
 sudo systemctl stop ssh
 ```
 
-### 9. Verify SSH Service Is Stopped
+Verify that the service has stopped:
 
 ```bash
-# Check SSH service status
 sudo systemctl status ssh
 ```
 
-**Result:**
+**Expected result:**
 
 ```text
 inactive (dead)
 ```
 
-### 10. Start the SSH Service Again
+### Start the SSH Service Again
 
 ```bash
-# Start the SSH service
 sudo systemctl start ssh
 ```
 
-### 11. Verify SSH Service Is Running
+Verify that the service is running:
 
 ```bash
-# Check SSH service status
 sudo systemctl status ssh
 ```
 
-**Result:**
+**Expected result:**
 
 ```text
 active (running)
 ```
 
-### 12. Check SSH Configuration
+## SSH Configuration Check
+
+Inspect the `PermitRootLogin` directive in the SSH server configuration:
 
 ```bash
-# Check the PermitRootLogin SSH configuration
 sudo grep PermitRootLogin /etc/ssh/sshd_config
 ```
 
-**Result:**
+**Observed configuration:**
 
 ```text
 #PermitRootLogin prohibit-password
 ```
 
-### 13. Verify SSH Service Is Enabled
+> **Security note:** Avoid permitting direct root login unless there is a documented administrative requirement. Prefer individual user accounts with `sudo`, strong authentication, and—where appropriate—SSH keys.
+
+## Final Verification
+
+Verify that SSH is configured to start automatically and is currently running:
 
 ```bash
-# Check if SSH is enabled at system startup
 sudo systemctl is-enabled ssh
-```
-
-### 14. Verify SSH Service Is Active
-
-```bash
-# Check if the SSH service is currently active
 sudo systemctl is-active ssh
 ```
 
-**Results:**
+**Final results:**
 
 ```text
 SSH service: enabled
 SSH service: active
 ```
 
-## What I Learned
+## Skills Practiced
 
-Through this phase, I practiced:
-
-- Checking OpenSSH installation
-- Enabling and starting the SSH service
-- Stopping and starting a system service
-- Checking service status with `systemctl`
+- Installing and verifying the OpenSSH server package
+- Enabling and starting a system service with `systemctl`
+- Stopping and restarting SSH safely
+- Checking service status and runtime state
 - Testing a local SSH connection
-- Verifying the current SSH user
-- Inspecting basic SSH configuration
-- Understanding SSH port `22`
+- Verifying the authenticated SSH user
+- Inspecting SSH server configuration
+- Understanding the role of port `22/tcp`
+- Applying basic SSH security considerations
 
 ## Practical Evidence
 
-This phase includes practical SSH service management, connection testing, configuration checks, command results, and screenshots collected from the Kali Linux lab.
+This phase includes terminal output, service status checks, SSH connection tests, configuration verification, and screenshots collected during the Kali Linux lab.
 
-## Practical Status
+## Completion Checklist
 
-**Applied / Completed**
-
-This phase was practically performed and verified on Kali Linux using terminal commands, service status checks, SSH connection tests, and screenshots.
-````
+- [x] OpenSSH server installed
+- [x] SSH service enabled at startup
+- [x] SSH service started successfully
+- [x] Local SSH connection tested
+- [x] Current SSH user verified
+- [x] Stop/start service operations tested
+- [x] `PermitRootLogin` configuration inspected
+- [x] Final service state confirmed as enabled and active
