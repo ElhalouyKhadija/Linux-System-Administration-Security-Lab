@@ -1,23 +1,51 @@
 # Phase 4 — Firewall & Security Rules
 
-# Inspect the current iptables firewall configuration
+## Overview
+
+This phase documents the inspection of the host firewall using `iptables`. The goal is to review the active chains, default policies, configured rules, and packet counters.
+
+## Firewall Inspection
+
+Run the following command with administrative privileges:
+
+```bash
 sudo iptables -L -n -v
+```
 
-# -L: List the firewall rules
-# -n: Display IP addresses and ports numerically
-# -v: Display detailed information and packet/byte counters
+### Option Reference
 
-# The command displays the main firewall chains:
-# INPUT   -> Traffic entering the system
-# FORWARD -> Traffic passing through the system
-# OUTPUT  -> Traffic leaving the system
+| Option | Purpose |
+|---|---|
+| `-L` | Lists the firewall rules |
+| `-n` | Displays addresses and ports numerically |
+| `-v` | Shows verbose details and packet/byte counters |
 
-# The command also shows the default policy of each chain
-# and the number of packets and bytes processed by the rules.
+## Main Firewall Chains
 
-# Practical result:
-# INPUT policy: ACCEPT
-# FORWARD policy: ACCEPT
-# OUTPUT policy: ACCEPT
-# No visible filtering rules were configured.
-# Packet and byte counters were 0.
+| Chain | Traffic handled |
+|---|---|
+| `INPUT` | Traffic entering the system |
+| `FORWARD` | Traffic passing through the system |
+| `OUTPUT` | Traffic leaving the system |
+
+## Practical Result
+
+The inspection showed the following baseline configuration:
+
+```text
+INPUT policy: ACCEPT
+FORWARD policy: ACCEPT
+OUTPUT policy: ACCEPT
+Visible filtering rules: None
+Packet counters: 0
+Byte counters: 0
+```
+
+> **Assessment:** No visible filtering rules were configured at the time of inspection. All three default policies were set to `ACCEPT`.
+
+## Key Takeaways
+
+- Reviewed the active `iptables` configuration.
+- Identified the purpose of the `INPUT`, `FORWARD`, and `OUTPUT` chains.
+- Checked default chain policies and traffic counters.
+- Recorded the host's baseline firewall state for future hardening.
