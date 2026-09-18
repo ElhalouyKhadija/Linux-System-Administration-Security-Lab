@@ -1,16 +1,29 @@
-# Phase 4 · Firewall & Security Rules
+# Phase 4: Firewall and Security Rules
 
-> **Practical lab:** Inspecting the active `iptables` firewall configuration on Kali Linux
-
-## Objective
-
-The purpose of this practical exercise was to inspect the system's current firewall configuration, identify the default chain policies, and review the packet and byte counters reported by `iptables`.
+> **Linux System Administration & Security Lab**  
+> **Practical:** Inspecting the active `iptables` firewall configuration on Kali Linux
 
 ---
 
-## 1. Inspect the Firewall Configuration
+## 1. Objective
 
-Run the following command with administrative privileges:
+This practical exercise focused on inspecting the current firewall configuration on a Kali Linux system. The inspection was used to identify the default policies for the main `iptables` chains and review the packet and byte counters reported by the firewall.
+
+### Learning outcomes
+
+By completing this practical, I was able to:
+
+- Inspect firewall rules using `iptables`.
+- Explain the purpose of the `INPUT`, `FORWARD`, and `OUTPUT` chains.
+- Identify default firewall policies.
+- Interpret packet and byte counters.
+- Assess the security implications of an unrestricted default policy.
+
+---
+
+## 2. Firewall Inspection Command
+
+The following command was executed with administrative privileges:
 
 ```bash
 sudo iptables -L -n -v
@@ -22,86 +35,92 @@ sudo iptables -L -n -v
 |:------:|-------------|
 | `-L` | Lists the configured firewall rules. |
 | `-n` | Displays IP addresses and ports numerically, without DNS or service-name lookups. |
-| `-v` | Shows verbose information, including interfaces, packet counts, and byte counts. |
+| `-v` | Displays verbose information, including interfaces, packet counts, and byte counts. |
+
+> **Note:** The command displays the rules currently loaded in the active IPv4 `iptables` tables. Firewall counters are runtime values and may change as network traffic passes through the system.
 
 ---
 
-## 2. Firewall Chains
+## 3. Primary Firewall Chains
 
-The command displays three primary chains:
+`iptables` organizes packet-processing rules into chains. The three primary built-in chains are:
 
-| Chain | Purpose |
-|:------|:--------|
+| Chain | Function |
+|:------|:---------|
 | `INPUT` | Controls traffic entering the local system. |
-| `FORWARD` | Controls traffic routed through the system. |
+| `FORWARD` | Controls traffic routed through the system to another destination. |
 | `OUTPUT` | Controls traffic leaving the local system. |
 
 ---
 
-## 3. Default Firewall Policies
+## 4. Observed Default Policies
 
-The default policies observed during this practical test were:
+The following default policies were observed during the practical inspection:
 
-| Chain | Default policy |
-|:------|:---------------|
-| `INPUT` | `ACCEPT` |
-| `FORWARD` | `ACCEPT` |
-| `OUTPUT` | `ACCEPT` |
+| Chain | Default policy | Interpretation |
+|:------|:---------------|:---------------|
+| `INPUT` | `ACCEPT` | Unmatched incoming traffic is allowed. |
+| `FORWARD` | `ACCEPT` | Unmatched forwarded traffic is allowed. |
+| `OUTPUT` | `ACCEPT` | Unmatched outgoing traffic is allowed. |
 
-> **Security note:** An `ACCEPT` policy allows traffic that does not match a more specific rule. In a production environment, firewall policies should be reviewed carefully and configured according to the system's security requirements.
+> **Security consideration:** An `ACCEPT` policy allows traffic that does not match a more specific rule. Although this may be suitable for a controlled lab environment, production systems should use a deliberate firewall policy based on the principle of least privilege. Any change to a live firewall should be tested carefully to avoid disrupting legitimate access.
 
 ---
 
-## 4. Rule and Traffic Counters
+## 5. Rule and Traffic Counters
 
 No visible filtering rules were configured at the time of inspection. The counters reported during the test were:
 
-| Metric | Value |
-|:-------|------:|
+| Metric | Observed value |
+|:-------|---------------:|
 | Packets | `0` |
 | Bytes | `0` |
 
-These values indicate that no packets or bytes were recorded by the displayed rules during the inspection. Counter values are runtime statistics and may change as network traffic passes through the firewall.
+These values indicate that no packets or bytes were recorded by the displayed rules during the inspection. Because `iptables` counters are runtime statistics, their values may change as network traffic is processed.
 
 ---
 
-## Practical Summary
+## 6. Practical Results Summary
 
 | Area | Result |
 |:-----|:-------|
 | Firewall tool | `iptables` |
 | Operating system | Kali Linux |
 | Visible filtering rules | None observed |
-| `INPUT` policy | `ACCEPT` |
-| `FORWARD` policy | `ACCEPT` |
-| `OUTPUT` policy | `ACCEPT` |
+| `INPUT` default policy | `ACCEPT` |
+| `FORWARD` default policy | `ACCEPT` |
+| `OUTPUT` default policy | `ACCEPT` |
 | Recorded packet count | `0` |
 | Recorded byte count | `0` |
 
----
+### Assessment
 
-## What I Learned
-
-This practical exercise provided hands-on experience with:
-
-- Inspecting firewall rules with `iptables`
-- Understanding the `INPUT`, `FORWARD`, and `OUTPUT` chains
-- Interpreting default firewall policies
-- Reading packet and byte counters
-- Reviewing basic Linux firewall concepts
-- Assessing the security implications of an unrestricted default policy
+The system was operating with permissive default policies and no visible filtering rules at the time of inspection. This configuration provides limited traffic restriction and should not automatically be considered appropriate for a production or internet-facing system. A secure configuration should be designed according to the system's role, required services, and organizational security requirements.
 
 ---
 
-## Practical Evidence
+## 7. Evidence Checklist
 
-The firewall configuration was inspected in the Kali Linux lab using the command shown above. The results were documented with command output and supporting screenshots.
+The practical evidence should include:
 
-> **Evidence checklist**
-> - [ ] Terminal command and output captured
-> - [ ] Firewall chain policies visible
-> - [ ] Packet and byte counters documented
-> - [ ] Kali Linux lab screenshot attached
+- [ ] Terminal command and output captured.
+- [ ] Firewall chain policies clearly visible.
+- [ ] Packet and byte counters documented.
+- [ ] Kali Linux environment or lab screenshot attached.
+
+> **Evidence location:** Add screenshots or command output below this section when available.
+
+<!-- Add practical evidence here, for example:
+
+![iptables inspection output](path/to/screenshot.png)
+
+-->
+
+---
+
+## 8. Conclusion
+
+This practical provided hands-on experience with inspecting a Linux firewall using `iptables`. It demonstrated how to identify the main firewall chains, determine their default policies, and review runtime traffic counters. The results also highlighted why permissive default policies should be reviewed and hardened when a system requires stronger network protection.
 
 ---
 
