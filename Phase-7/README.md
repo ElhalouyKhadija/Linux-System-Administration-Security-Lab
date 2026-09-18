@@ -38,4 +38,4 @@ Project Status
 
 Completed
 
-The Linux System Administration & Security Lab was practically performed on Kali Linux and documented as a GitHub portfolio project.
+The Linux System Administration & Security Lab was practically performed on Kali Linux and documented as a GitHub portfolio project
