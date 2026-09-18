@@ -1,46 +1,112 @@
-Phase 3 — SSH Service & Remote Access
+````markdown
+# Phase 3 — SSH Service & Remote Access
 
+## Practical Commands
+
+The following commands were used during the practical lab.
+
+### 1. Check OpenSSH Installation
+
+```bash
 # Check OpenSSH installation
 sudo apt install openssh-server
+```
 
+### 2. Enable and Start SSH
+
+```bash
 # Enable and start SSH
 sudo systemctl enable --now ssh
+```
 
+### 3. Check if SSH Is Active
+
+```bash
 # Check if SSH is active
 systemctl is-active ssh
+```
 
+### 4. Check SSH Service Status
+
+```bash
 # Check SSH service status
 sudo systemctl status ssh
+```
 
+### 5. Test SSH Connection Locally
+
+```bash
 # Test SSH connection locally
 ssh localhost
+```
 
+### 6. Check Current User
+
+```bash
 # Check current user
 whoami
+```
 
+### 7. Exit SSH Session
+
+```bash
 # Exit SSH session
 exit
+```
 
+### 8. Stop SSH Service
+
+```bash
 # Stop SSH service
 sudo systemctl stop ssh
+```
 
+### 9. Check SSH Status
+
+```bash
 # Check SSH status
 sudo systemctl status ssh
+```
 
+### 10. Start SSH Service
+
+```bash
 # Start SSH service
 sudo systemctl start ssh
+```
 
+### 11. Check SSH Status Again
+
+```bash
 # Check SSH status again
 sudo systemctl status ssh
+```
 
+### 12. Check SSH Root Login Configuration
+
+```bash
 # Check SSH root login configuration
 sudo grep PermitRootLogin /etc/ssh/sshd_config
+```
 
+### 13. Check if SSH Is Enabled
+
+```bash
 # Check if SSH is enabled
 sudo systemctl is-enabled ssh
+```
 
+### 14. Check if SSH Is Active
+
+```bash
 # Check if SSH is active
 sudo systemctl is-active ssh
+```
 
+### 15. List Running Services
+
+```bash
 # List running services
 sudo systemctl list-units --type=service --state=running
+```
+````
