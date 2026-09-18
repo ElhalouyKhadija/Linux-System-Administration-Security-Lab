@@ -1,73 +1,83 @@
-Phase 4 — Firewall & Security Rules
+# Phase 4 — Firewall and Security Rules
 
-Objective
+## Overview
 
-The objective of this phase was to inspect the firewall configuration on Kali Linux and understand the current network filtering policies.
+This phase focused on inspecting the firewall configuration of a Kali Linux system and reviewing its current network-filtering policies. The inspection was performed with **iptables** and did not modify the existing firewall configuration.
 
-The firewall configuration was reviewed using iptables.
+## Objectives
 
-1. Firewall Inspection
+- Inspect the active iptables configuration.
+- Understand the purpose of the primary firewall chains.
+- Identify the default policies applied to inbound, forwarded, and outbound traffic.
+- Review packet and byte counters.
+- Document the system's firewall posture without changing any rules.
 
-The current firewall configuration was inspected with:
+## 1. Firewall Inspection
 
+The active firewall rules were inspected with the following command:
+
+```bash
 sudo iptables -L -n -v
+```
 
-Command Options
-	•	-L — Lists the firewall rules.
-	•	-n — Displays IP addresses and ports numerically.
-	•	-v — Displays detailed information, including packet and byte counters.
+### Command Options
 
-2. Firewall Chains
+| Option | Description |
+|:------:|-------------|
+| `-L` | Lists the rules in each firewall chain. |
+| `-n` | Displays IP addresses and port numbers in numeric format. |
+| `-v` | Shows verbose information, including packet and byte counters. |
 
-The command displays three main firewall chains:
+## 2. Primary Firewall Chains
 
-INPUT
+The command displays three standard iptables chains:
 
-Controls network traffic entering the Kali Linux system.
+| Chain | Purpose |
+|-------|---------|
+| `INPUT` | Controls traffic entering the Kali Linux system. |
+| `FORWARD` | Controls packets routed through the system. |
+| `OUTPUT` | Controls traffic leaving the system. |
 
-FORWARD
-
-Controls packets that are routed through the system.
-
-OUTPUT
-
-Controls network traffic leaving the system.
-
-3. Observed Configuration
+## 3. Observed Configuration
 
 The inspection showed the following default policies:
 
-Chain	Policy
-INPUT	ACCEPT
-FORWARD	ACCEPT
-OUTPUT	ACCEPT
+| Chain | Default Policy |
+|-------|----------------|
+| `INPUT` | `ACCEPT` |
+| `FORWARD` | `ACCEPT` |
+| `OUTPUT` | `ACCEPT` |
 
-No visible filtering rules were configured at the time of the test.
+At the time of testing:
 
-The packet and byte counters were also 0.
+- No visible filtering rules were configured.
+- The default policy for all three primary chains was `ACCEPT`.
+- Packet and byte counters were `0`.
 
-4. Security Observation
+> **Note:** This observation reflects the firewall state at the time of inspection. Firewall rules and counters may change as the system configuration or network activity changes.
 
-The firewall configuration was inspected as part of the security assessment.
+## 4. Security Assessment
 
-The system was using ACCEPT as the default policy for the main chains, and no visible iptables filtering rules were present during the inspection.
+The system was operating with an unrestricted default policy for incoming, forwarded, and outgoing traffic. Because no visible iptables filtering rules were present, the inspection did not identify an active rule set restricting network traffic.
 
-No firewall rules were added, removed, or modified during this phase.
+No firewall rules were added, removed, or modified during this phase. The work was limited to inspection and documentation.
 
-5. What I Learned
-	•	How to inspect Linux firewall configuration
-	•	How iptables chains work
-	•	Difference between INPUT, FORWARD, and OUTPUT
-	•	How firewall policies are displayed
-	•	How to read packet and byte counters
-	•	How to perform a basic firewall security check
+## 5. Key Takeaways
 
-Evidence
+This phase demonstrated how to:
 
-The practical work was performed on Kali Linux and verified using the terminal command and screenshot.
+- Inspect a Linux firewall configuration with iptables.
+- Distinguish between the `INPUT`, `FORWARD`, and `OUTPUT` chains.
+- Interpret default firewall policies.
+- Read packet and byte counters.
+- Perform a basic firewall security assessment.
 
-Practical Status
+## Evidence
 
-Applied / Partially Applied
+The practical work was performed on Kali Linux and verified using the terminal command shown above and a supporting screenshot.
 
-The firewall configuration was successfully inspected and documented. No firewall configuration changes were performed during this phase.
+## Practical Status
+
+**Applied — Inspection and Documentation Completed**
+
+The firewall configuration was successfully inspected and documented. No configuration changes were performed during this phase.
