@@ -1,109 +1,181 @@
-Phase 3 — SSH Service & Remote Access
+````markdown
+# Phase 3 — SSH Service & Remote Access
 
-Objective
+## Objective
 
 The objective of this phase was to install, enable, manage, and test the SSH service on Kali Linux.
 
-1. Check OpenSSH Installation
+## Practical Commands
 
-The OpenSSH server package was checked using:
+The following commands were used during the practical lab.
 
+### 1. Check OpenSSH Installation
+
+```bash
+# Check OpenSSH server installation
 sudo apt install openssh-server
+```
 
-Result:
+**Result:**
 
+```text
 openssh-server is already the newest version
+```
 
-2. Enable and Start SSH
+### 2. Enable and Start SSH
 
-The SSH service was enabled and started using:
-
+```bash
+# Enable and start the SSH service
 sudo systemctl enable --now ssh
+```
 
-The service status was then checked:
+### 3. Check if SSH Is Active
 
+```bash
+# Check if the SSH service is active
 systemctl is-active ssh
+```
 
-Result:
+**Result:**
 
+```text
 active
+```
 
-3. Check SSH Service Status
+### 4. Check SSH Service Status
 
-The SSH service was also inspected using:
-
+```bash
+# Check SSH service status
 sudo systemctl status ssh
+```
 
-The service was running and listening on port 22.
+The service was running and listening on port `22`.
 
-4. Test SSH Connection
+### 5. Test SSH Connection
 
-A local SSH connection was tested using:
-
+```bash
+# Test a local SSH connection
 ssh localhost
+```
 
-After connecting, the current user was verified:
+### 6. Verify the Current User
 
+After connecting through SSH, the current user was verified:
+
+```bash
+# Check the current user
 whoami
+```
 
-Result:
+**Result:**
 
+```text
 kali
+```
 
-The SSH session was then closed using:
+### 7. Exit the SSH Session
 
+```bash
+# Exit the SSH session
 exit
+```
 
-5. Stop and Start SSH Service
+### 8. Stop the SSH Service
 
 The SSH service was stopped to verify service management:
 
+```bash
+# Stop the SSH service
 sudo systemctl stop ssh
+```
 
-The service status showed:
+### 9. Verify SSH Service Is Stopped
 
+```bash
+# Check SSH service status
+sudo systemctl status ssh
+```
+
+**Result:**
+
+```text
 inactive (dead)
+```
 
-The service was then started again:
+### 10. Start the SSH Service Again
 
+```bash
+# Start the SSH service
 sudo systemctl start ssh
+```
 
-The status returned to:
+### 11. Verify SSH Service Is Running
 
+```bash
+# Check SSH service status
+sudo systemctl status ssh
+```
+
+**Result:**
+
+```text
 active (running)
+```
 
-6. SSH Configuration Check
+### 12. Check SSH Configuration
 
-The SSH configuration was inspected using:
-
+```bash
+# Check the PermitRootLogin SSH configuration
 sudo grep PermitRootLogin /etc/ssh/sshd_config
+```
 
-The configuration showed:
+**Result:**
 
+```text
 #PermitRootLogin prohibit-password
+```
 
-7. Service Verification
+### 13. Verify SSH Service Is Enabled
 
-The following commands were used to verify the SSH service:
-
+```bash
+# Check if SSH is enabled at system startup
 sudo systemctl is-enabled ssh
+```
+
+### 14. Verify SSH Service Is Active
+
+```bash
+# Check if the SSH service is currently active
 sudo systemctl is-active ssh
+```
 
-Results:
-	•	SSH service: enabled
-	•	SSH service: active
+**Results:**
 
-What I Learned
-	•	How to check OpenSSH installation
-	•	How to enable and start SSH
-	•	How to stop and restart a system service
-	•	How to check service status with systemctl
-	•	How to test an SSH connection
-	•	How to inspect basic SSH configuration
-	•	How SSH uses port 22
+```text
+SSH service: enabled
+SSH service: active
+```
 
-Practical Status
+## What I Learned
 
-Applied / Completed
+Through this phase, I practiced:
 
-This phase was practically performed and verified on Kali Linux using terminal commands and screenshots.
+- Checking OpenSSH installation
+- Enabling and starting the SSH service
+- Stopping and starting a system service
+- Checking service status with `systemctl`
+- Testing a local SSH connection
+- Verifying the current SSH user
+- Inspecting basic SSH configuration
+- Understanding SSH port `22`
+
+## Practical Evidence
+
+This phase includes practical SSH service management, connection testing, configuration checks, command results, and screenshots collected from the Kali Linux lab.
+
+## Practical Status
+
+**Applied / Completed**
+
+This phase was practically performed and verified on Kali Linux using terminal commands, service status checks, SSH connection tests, and screenshots.
+````
