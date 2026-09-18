@@ -2,11 +2,81 @@
 
 > **Practical Linux administration lab**
 >
-> Install, configure, verify, test, and troubleshoot the OpenSSH server on a Debian- or Ubuntu-based system.
+> Install, configure, verify, test, secure, and troubleshoot the OpenSSH server on a Debian- or Ubuntu-based system.
 
 [![Linux](https://img.shields.io/badge/Linux-Debian%20%7C%20Ubuntu-772953?logo=linux&logoColor=white)](https://ubuntu.com/)
 [![OpenSSH](https://img.shields.io/badge/OpenSSH-Server-2F3437?logo=gnu-bash&logoColor=white)](https://www.openssh.com/)
-[![Status](https://img.shields.io/badge/Lab-Phase%203-0A7BBB)](.)
+[![Lab](https://img.shields.io/badge/Lab-Phase%203-0A7BBB)](.)
+[![Focus](https://img.shields.io/badge/Focus-Service%20Management%20%7C%20Security-16A085)](.)
+
+---
+
+## Professional Preview
+
+<table>
+<tr>
+<td width="50%">
+
+### Lab outcome
+
+By the end of this lab, you will have a working SSH service that is:
+
+- **Installed** with `openssh-server`.
+- **Enabled** to start automatically at boot.
+- **Active** and listening for connections.
+- **Tested** with a local SSH session.
+- **Validated** before configuration changes are applied.
+
+</td>
+<td width="50%">
+
+### Expected final state
+
+```text
+SSH service     enabled
+SSH runtime     active
+Local test      successful
+Configuration   valid
+```
+
+> The examples use representative output. Usernames, host keys, process IDs, timestamps, and package versions vary by system.
+
+</td>
+</tr>
+</table>
+
+### Workflow
+
+```mermaid
+flowchart LR
+    A[Install OpenSSH] --> B[Enable and start SSH]
+    B --> C[Verify service]
+    C --> D[Test localhost]
+    D --> E[Inspect security settings]
+    E --> F[Validate and troubleshoot]
+```
+
+<details>
+<summary><strong>Quick terminal preview</strong></summary>
+
+```console
+$ sudo apt update && sudo apt install -y openssh-server
+$ sudo systemctl enable --now ssh
+
+$ systemctl is-enabled ssh
+enabled
+
+$ systemctl is-active ssh
+active
+
+$ ssh localhost
+$ whoami
+student
+$ exit
+Connection to localhost closed.
+```
+
+</details>
 
 ---
 
@@ -14,7 +84,6 @@
 
 - [Learning Objectives](#learning-objectives)
 - [Prerequisites](#prerequisites)
-- [Quick Preview](#quick-preview)
 - [Lab Procedure](#lab-procedure)
   - [1. Install OpenSSH Server](#1-install-openssh-server)
   - [2. Enable and Start SSH](#2-enable-and-start-ssh)
@@ -36,13 +105,13 @@ By completing this lab, you will be able to:
 
 - Install the OpenSSH server package.
 - Enable and manage the SSH service with `systemctl`.
-- Verify the SSH daemon's status and configuration.
+- Verify the SSH daemon's status and effective configuration.
 - Test a local SSH connection and identify the authenticated user.
-- Inspect SSH root-login settings.
+- Inspect and improve SSH root-login security.
 - List services currently managed by `systemd`.
 - Diagnose common SSH service and configuration problems.
 
-> **Distribution note:** These commands target Debian- and Ubuntu-based systems, where the package manager is `apt` and the service is commonly named `ssh`. On other distributions, the package and service names may differ.
+> **Distribution note:** These commands target Debian- and Ubuntu-based systems, where the package manager is `apt` and the service is commonly named `ssh`. Other distributions may use different package managers or service names, such as `sshd`.
 
 ## Prerequisites
 
@@ -53,49 +122,7 @@ Before starting, make sure you have:
 - Access to a terminal.
 - Permission to install packages and manage services.
 
----
-
-## Quick Preview
-
-The following workflow summarizes the main lab activities:
-
-```text
-Install package  →  Enable and start service  →  Verify status
-       ↓                         ↓                     ↓
- Test localhost  ←  Inspect security settings  ←  Troubleshoot
-```
-
-### Expected final state
-
-When the lab is complete, the SSH service should report:
-
-```text
-enabled
-active
-```
-
-The local connection test should also authenticate successfully and display the current username with `whoami`.
-
-> **Preview:** The examples below show representative output. Hostnames, process IDs, usernames, timestamps, and package versions will vary between systems.
-
-<details>
-<summary><strong>Example terminal preview</strong></summary>
-
-```console
-$ sudo systemctl is-enabled ssh
-enabled
-
-$ sudo systemctl is-active ssh
-active
-
-$ ssh localhost
-$ whoami
-student
-$ exit
-Connection to localhost closed.
-```
-
-</details>
+> **Remote-system warning:** Do not stop or restart SSH on a production server unless you have a tested alternative access method, such as a console or out-of-band management session.
 
 ---
 
@@ -110,16 +137,11 @@ sudo apt update
 sudo apt install -y openssh-server
 ```
 
-<details>
-<summary><strong>Expected result</strong></summary>
-
-The package manager completes without errors and reports that `openssh-server` is installed or already up to date.
-
-</details>
+The command should complete without errors and report that `openssh-server` is installed or already up to date.
 
 ### 2. Enable and Start SSH
 
-Enable SSH to start automatically during boot and start it immediately:
+Enable SSH at boot and start it immediately:
 
 ```bash
 sudo systemctl enable --now ssh
@@ -127,27 +149,25 @@ sudo systemctl enable --now ssh
 
 This combines two operations:
 
-- `enable` — configures SSH to start at boot.
-- `--now` — starts the service immediately.
+- `enable` configures SSH to start automatically at boot.
+- `--now` starts the service immediately.
 
 ### 3. Verify Service Status
 
-Confirm that the service is running and inspect its detailed status:
+Check the current state and inspect the detailed service status:
 
 ```bash
 systemctl is-active ssh
-sudo systemctl status ssh
+sudo systemctl status ssh --no-pager
 ```
 
-The first command should return:
+Expected result from the first command:
 
 ```text
 active
 ```
 
-A successful `systemctl status` view normally includes `Active: active (running)`.
-
-> Press **`q`** to exit the status view.
+A successful status view normally includes `Active: active (running)`.
 
 ### 4. Test a Local SSH Connection
 
@@ -159,12 +179,9 @@ whoami
 exit
 ```
 
-On the first connection, SSH may ask you to confirm the host fingerprint. Type `yes` only when you recognize and trust the host.
+On the first connection, SSH may ask you to confirm the host fingerprint. Type `yes` only after verifying that the host is trusted.
 
-The `whoami` command should display the username used for the SSH session.
-
-<details>
-<summary><strong>Example output</strong></summary>
+The `whoami` command should display the account used for the SSH session.
 
 ```console
 The authenticity of host 'localhost' can't be established.
@@ -176,22 +193,20 @@ $ exit
 Connection to localhost closed.
 ```
 
-</details>
-
 ### 5. Stop and Start SSH
 
 Stop the service and verify that it is inactive:
 
 ```bash
 sudo systemctl stop ssh
-sudo systemctl is-active ssh
+systemctl is-active ssh
 ```
 
-Start the service again and confirm that it is running:
+Start it again and confirm that it is running:
 
 ```bash
 sudo systemctl start ssh
-sudo systemctl is-active ssh
+systemctl is-active ssh
 ```
 
 Expected results:
@@ -201,31 +216,32 @@ inactive
 active
 ```
 
-> **Warning:** Stopping SSH disconnects active remote sessions and prevents new SSH connections until the service is started again. Do not perform this step on a remote production system unless you have an alternative management method, such as console access.
+> **Warning:** Stopping SSH disconnects active remote sessions and prevents new connections until the service starts again. Avoid this on a remote production system without alternate access.
 
 ### 6. Inspect Root-Login Configuration
 
-Inspect explicitly configured `PermitRootLogin` directives:
+Inspect explicitly configured `PermitRootLogin` directives in the main configuration file and its drop-in directory:
 
 ```bash
-sudo grep -E '^\s*#?\s*PermitRootLogin' /etc/ssh/sshd_config
+sudo grep -RinE '^[[:space:]]*#?[[:space:]]*PermitRootLogin[[:space:]]+' \
+  /etc/ssh/sshd_config /etc/ssh/sshd_config.d/ 2>/dev/null
 ```
 
-For improved security, direct root login should generally be disabled. Use a regular account and `sudo` when administrative privileges are required.
+To view the effective configuration after all included files are processed, use:
 
-> **Important:** Configuration may also be supplied by files in `/etc/ssh/sshd_config.d/`. To view the effective configuration, use `sshd -T`:
->
-> ```bash
-> sudo sshd -T | grep -i '^permitrootlogin'
-> ```
+```bash
+sudo sshd -T | grep -i '^permitrootlogin[[:space:]]'
+```
+
+For improved security, direct root login should generally be disabled. Use a regular account with `sudo` when administrative privileges are required.
 
 ### 7. Confirm Enabled and Active States
 
-Verify both the startup configuration and the current runtime state:
+Verify both startup configuration and runtime state:
 
 ```bash
-sudo systemctl is-enabled ssh
-sudo systemctl is-active ssh
+systemctl is-enabled ssh
+systemctl is-active ssh
 ```
 
 Expected results:
@@ -240,55 +256,55 @@ Expected results:
 Display all currently running services managed by `systemd`:
 
 ```bash
-sudo systemctl list-units --type=service --state=running
+sudo systemctl list-units --type=service --state=running --no-pager
 ```
 
-Use this command to confirm that `ssh.service` appears among the active services.
+Confirm that `ssh.service` appears among the active services.
 
 ---
 
 ## Troubleshooting
 
-If SSH is not working, run the following checks in order:
+Run these checks in order if SSH is not working.
 
 ### Check the service state
 
 ```bash
-sudo systemctl status ssh
+sudo systemctl status ssh --no-pager
 ```
 
-### View recent SSH service logs
+### View recent SSH logs
 
 ```bash
 sudo journalctl -u ssh --no-pager -n 50
 ```
 
-### Validate the SSH daemon configuration
+### Validate the daemon configuration
 
-Run this before restarting SSH after editing configuration files:
+Always validate configuration before restarting SSH:
 
 ```bash
 sudo sshd -t
 ```
 
-No output normally indicates that the configuration is valid.
+No output normally indicates that the configuration is valid. Any output should be corrected before continuing.
 
 ### Confirm that SSH is listening
 
 ```bash
-sudo ss -tulpn | grep ':22'
+sudo ss -tulpn | grep -E '(^|:)22([[:space:]]|$)'
 ```
 
 If SSH uses a custom port, replace `22` with the configured port.
 
-### Restart SSH after a validated configuration change
+### Restart after a validated change
 
 ```bash
 sudo systemctl restart ssh
-sudo systemctl is-active ssh
+systemctl is-active ssh
 ```
 
-> **Safety rule:** Always run `sudo sshd -t` before restarting SSH. A syntax error can prevent the daemon from starting and may lock you out of a remote system.
+> **Safety rule:** Run `sudo sshd -t` before every restart after editing SSH configuration. A syntax error can prevent the daemon from starting and may lock you out of a remote system.
 
 ---
 
@@ -296,28 +312,28 @@ sudo systemctl is-active ssh
 
 - Prefer SSH key authentication over password authentication.
 - Disable direct root login and use `sudo` with a regular account.
-- Keep the OpenSSH package and operating system updated.
+- Keep OpenSSH and the operating system updated.
 - Use a firewall to restrict SSH access to trusted networks where possible.
 - Never expose private keys or passwords in command output, screenshots, or documentation.
 - Verify host fingerprints when connecting to a system for the first time.
+- Back up SSH configuration before making significant changes.
 
 ---
 
 ## Completion Checklist
-
-Use this checklist to confirm that the lab is complete:
 
 - [ ] OpenSSH server is installed.
 - [ ] SSH is enabled at boot.
 - [ ] SSH is currently active.
 - [ ] A local SSH connection was tested successfully.
 - [ ] The authenticated username was verified with `whoami`.
-- [ ] Root-login configuration was inspected.
+- [ ] Effective root-login configuration was inspected.
 - [ ] Running services were listed.
+- [ ] SSH configuration was validated with `sshd -t`.
 - [ ] SSH troubleshooting commands were reviewed.
 
 ---
 
 ## Summary
 
-This lab provides a complete workflow for installing, enabling, testing, securing, and troubleshooting the OpenSSH service on Linux. Always validate configuration changes before restarting SSH, especially when working over a remote connection.
+This lab provides a complete workflow for installing, enabling, testing, securing, and troubleshooting OpenSSH on Linux. Always validate configuration changes before restarting SSH, especially on remote systems where a failed restart can remove your access.
