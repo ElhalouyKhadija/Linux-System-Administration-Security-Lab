@@ -1,46 +1,61 @@
 # Phase 3 — SSH Service & Remote Access
 
-# Check OpenSSH installation
+This section covers the installation, activation, verification, and troubleshooting of the OpenSSH service on a Linux system.
+
+## 1. Install OpenSSH
+
+```bash
 sudo apt install openssh-server
+```
 
-# Enable and start SSH
+## 2. Enable and start the SSH service
+
+```bash
 sudo systemctl enable --now ssh
+```
 
-# Check if SSH is active
+## 3. Verify the service status
+
+```bash
 systemctl is-active ssh
-
-# Check SSH service status
 sudo systemctl status ssh
+```
 
-# Test SSH connection locally
+## 4. Test the SSH connection locally
+
+```bash
 ssh localhost
-
-# Check current user
 whoami
-
-# Exit SSH session
 exit
+```
 
-# Stop SSH service
+## 5. Stop and start the SSH service
+
+```bash
 sudo systemctl stop ssh
-
-# Check SSH status
 sudo systemctl status ssh
 
-# Start SSH service
 sudo systemctl start ssh
-
-# Check SSH status again
 sudo systemctl status ssh
+```
 
-# Check SSH root login configuration
+## 6. Check the SSH root-login configuration
+
+```bash
 sudo grep PermitRootLogin /etc/ssh/sshd_config
+```
 
-# Check if SSH is enabled
+## 7. Confirm that SSH is enabled and active
+
+```bash
 sudo systemctl is-enabled ssh
-
-# Check if SSH is active
 sudo systemctl is-active ssh
+```
 
-# List running services
+## 8. List all running services
+
+```bash
 sudo systemctl list-units --type=service --state=running
+```
+
+> **Note:** These commands help verify that the SSH daemon is installed, enabled, running, and configured correctly.
