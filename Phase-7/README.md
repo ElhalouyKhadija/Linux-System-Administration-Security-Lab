@@ -1,41 +1,40 @@
-Phase 7 — Documentation & Final Check
+# Phase 7 — Documentation and Final Check
 
-Objective
+## Objective
 
-The objective of this phase was to review, organize, and document the complete Linux System Administration & Security Lab.
+The purpose of this phase was to review, organize, and document the complete Linux System Administration & Security Lab. The project was carried out on Kali Linux and recorded using practical commands, observed results, and supporting screenshots from the lab work.
 
-The project was performed on Kali Linux and documented using commands, results, and screenshots from the practical work.
+## Final System Check
 
-Final System Check
+The final review covered the following key areas:
 
-The final review covered:
-	•	Linux users and groups
-	•	Directory ownership and permissions
-	•	Network configuration and connectivity
-	•	SSH service
-	•	Firewall configuration
-	•	Basic security checks
-	•	System resources and troubleshooting
+- Linux users and groups
+- Directory ownership and permissions
+- Network configuration and connectivity
+- SSH service status and configuration
+- Firewall configuration
+- Basic security checks
+- System resources and troubleshooting
 
-Documentation
+## Documentation
 
-The project documentation is organized by phase.
+The project documentation is organized by phase. Each phase contains the relevant practical tasks, commands, findings, and evidence collected during the work performed on Kali Linux.
 
-Each phase contains the relevant practical information, commands, and evidence from the work performed on Kali Linux.
+## What I Learned
 
-What I Learned
-	•	Linux system administration
-	•	Users, groups, ownership, and permissions
-	•	Network configuration and connectivity
-	•	SSH service management
-	•	Firewall inspection
-	•	Basic Linux security checks
-	•	System resource monitoring
-	•	Troubleshooting
-	•	Technical documentation
+- Linux system administration
+- User and group management
+- Ownership and permissions
+- Network configuration and connectivity
+- SSH service management
+- Firewall inspection and configuration
+- Basic Linux security practices
+- System resource monitoring
+- Troubleshooting techniques
+- Technical documentation and reporting
 
-Project Status
+## Project Status
 
 Completed
 
-The Linux System Administration & Security Lab was practically performed on Kali Linux and documented as a GitHub portfolio project
+The Linux System Administration & Security Lab was successfully performed on Kali Linux and documented as a GitHub portfolio project.
