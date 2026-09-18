@@ -1,6 +1,27 @@
 # Linux System Administration & Security Lab
 
-Practical Linux System Administration and Security Lab covering users, permissions, networking, SSH, system services, security checks, system resources, and troubleshooting.
+[![Platform](https://img.shields.io/badge/platform-Kali%20Linux-557C94?logo=kalilinux&logoColor=white)](#technologies--tools)
+[![Focus](https://img.shields.io/badge/focus-system%20administration%20%26%20security-2ea44f)](#skills-practiced)
+[![Status](https://img.shields.io/badge/status-completed-success)](#project-status)
+
+Practical Linux system administration and security lab covering users, permissions, networking, SSH, system services, security checks, system resources, and troubleshooting.
+
+## Preview
+
+| Area | Practical focus | Evidence |
+|---|---|---|
+| 👥 **Users & permissions** | Users, groups, ownership, Setgid, and access control | Access tests and permission verification |
+| 🌐 **Networking** | Interfaces, routing, DNS, `ping`, and `curl` | Connectivity results and configuration checks |
+| 🔐 **SSH & services** | OpenSSH configuration and `systemctl` service management | Service status and remote-access checks |
+| 🧱 **Firewall** | `iptables` chains, policies, and counters | Baseline firewall inspection |
+| 🛡️ **Security checks** | Running services, writable files, and group membership | Security checklist and troubleshooting |
+| 📊 **Resources** | Disk, memory, swap, uptime, and load | System monitoring commands |
+
+### Repository at a glance
+
+```text
+7 phases  •  Kali Linux  •  Bash  •  OpenSSH  •  iptables  •  systemd
+```
 
 ## About the Project
 
@@ -114,7 +135,6 @@ All practical work was performed in a Kali Linux lab environment.
 Linux-System-Administration-Security-Lab/
 │
 ├── README.md
-│
 ├── Phase-1/
 ├── Phase-2/
 ├── Phase-3/
