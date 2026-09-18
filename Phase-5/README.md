@@ -1,109 +1,161 @@
-Phase 5 — Linux Security Checks
+# Phase 5 — Linux Security Checks
 
-Objective
+> **Objective:** Perform and document basic security checks on Kali Linux, with a focus on SSH configuration, service status, file permissions, and user access controls.
 
-The objective of this phase was to perform basic security checks on Kali Linux.
+## Overview
 
-The practical work focused on checking SSH configuration, running services, and identifying world-writable files in /etc.
+This phase focused on practical Linux security administration tasks, including:
 
-SSH Configuration Check
+- Inspecting SSH root-login configuration
+- Verifying whether the SSH service is enabled and running
+- Reviewing active system services
+- Searching `/etc` for world-writable files
+- Validating directory access permissions
+- Troubleshooting an incorrectly entered command
+- Verifying supplementary group membership
 
-The SSH root login configuration was inspected using:
+## 1. SSH Configuration Check
 
+The SSH daemon configuration was inspected to review the root-login policy:
+
+```bash
 sudo grep PermitRootLogin /etc/ssh/sshd_config
+```
 
-The result showed:
+### Result
 
+```text
 #PermitRootLogin prohibit-password
+```
 
-SSH Service Verification
+The directive is commented out, so the effective setting is determined by the applicable SSH defaults or any included configuration files. This check confirms that the root-login configuration was reviewed and should be validated against the complete SSH configuration when making security decisions.
 
-The SSH service was checked using:
+## 2. SSH Service Verification
 
+The SSH service was checked for both startup configuration and current runtime status:
+
+```bash
 sudo systemctl is-enabled ssh
 sudo systemctl is-active ssh
+```
 
-Results:
-	•	SSH service: enabled
-	•	SSH service: active
+### Results
 
-This confirmed that the SSH service was enabled and currently running.
+| Check | Result |
+|---|---|
+| Service enabled at boot | `enabled` |
+| Service currently running | `active` |
 
-Running Services
+These results confirm that the SSH service is configured to start automatically and was running during the assessment.
 
-Running services were reviewed using:
+## 3. Running Services Review
 
+All currently running system services were listed with:
+
+```bash
 sudo systemctl list-units --type=service --state=running
+```
 
-The list included the SSH service.
+The output included the SSH service. Reviewing active services helps identify exposed or unnecessary services that may require further hardening.
 
-World-Writable File Check
+## 4. World-Writable File Check
 
-A security check was performed to search for world-writable files directly under /etc:
+A search was performed for world-writable files located directly under `/etc`:
 
+```bash
 sudo find /etc -maxdepth 1 -type f -perm -002 -ls
+```
 
-No matching files were displayed during the test.
+### Result
 
-Permission Verification
+No matching files were displayed during the test. This indicates that no world-writable regular files were found at the top level of `/etc` using the specified search criteria.
 
-Access permissions were also checked for the company directories.
+> **Scope note:** This command checks only regular files directly inside `/etc`; it does not recursively inspect files in subdirectories.
 
-An incorrect username was first tested:
+## 5. Permission Verification
 
+Access permissions were tested against the company directory structure.
+
+### Test with an Invalid Username
+
+```bash
 sudo -u saleuder ls /opt/company/IT
+```
 
-This resulted in an unknown-user error.
+This produced an unknown-user error because `saleuder` was not a valid configured username.
 
-The correct username was then tested:
+### Test with the Correct Username
 
+```bash
 sudo -u salesuser ls /opt/company/IT
+```
 
-The result was:
+### Result
 
+```text
 Permission denied
+```
 
-This confirmed that the configured directory permissions were restricting access.
+The result confirmed that the configured directory permissions prevented `salesuser` from accessing the IT directory.
 
-Troubleshooting
+## 6. Troubleshooting an Incorrect Command
 
-During the practical work, a command was entered incorrectly:
+An incorrect command was initially entered while attempting to add `salesuser` to the `IT` group:
 
+```bash
 sudo usermd -aG IT salesuser
+```
 
 The system returned:
 
+```text
 sudo: usermd: command not found
+```
 
-The correct path was identified using:
+The correct executable path was located with:
 
+```bash
 which usermod
+```
 
-Result:
+### Result
 
+```text
 /usr/sbin/usermod
+```
 
-The correct command was then used:
+The command was then corrected and executed successfully:
 
+```bash
 sudo /usr/sbin/usermod -aG IT salesuser
+```
 
-The user group membership was verified with:
+Group membership was verified with:
 
+```bash
 id salesuser
+```
 
-What I Learned
-	•	How to inspect SSH configuration
-	•	How to check whether a service is enabled and active
-	•	How to review running Linux services
-	•	How to check for world-writable files
-	•	How Linux permissions restrict access
-	•	How to troubleshoot an incorrect command
-	•	How to verify user group membership
+> **Operational note:** A new login session may be required before updated supplementary group membership is reflected in the user's current session.
 
-Evidence
+## Key Learning Outcomes
 
-The practical work was performed on Kali Linux and verified using terminal commands and screenshots.
+By completing this phase, I learned how to:
 
-Practical Status
+- Inspect SSH daemon configuration
+- Check whether a system service is enabled and active
+- Review currently running Linux services
+- Search for world-writable files
+- Test and interpret Linux directory permissions
+- Troubleshoot command-not-found errors
+- Locate executables using `which`
+- Add users to supplementary groups with `usermod`
+- Verify group membership with `id`
 
-Applied / Partially Applied
+## Evidence
+
+The practical work was completed on Kali Linux and verified through terminal commands and screenshots. Evidence should be retained alongside this documentation where applicable.
+
+## Practical Status
+
+**Applied / Partially Applied**
