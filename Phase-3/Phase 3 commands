@@ -1,112 +1,217 @@
-````markdown
 # Phase 3 — SSH Service & Remote Access
+
+## Overview
+
+This lab demonstrates how to install, configure, verify, and troubleshoot the OpenSSH server on a Linux system. The objective is to manage secure remote access using standard systemd and SSH commands.
+
+> **Safety note:** Perform these steps on a test machine or through an existing console session. Stopping or restarting SSH can disconnect active remote sessions.
+
+## Professional Preview
+
+A successful SSH configuration should show the service as **enabled** and **active (running)**. The following example represents the expected final state:
+
+```text
+$ sudo systemctl enable --now ssh
+Created symlink /etc/systemd/system/multi-user.target.wants/ssh.service → /lib/systemd/system/ssh.service.
+
+$ systemctl is-enabled ssh
+enabled
+
+$ systemctl is-active ssh
+active
+
+$ sudo systemctl status ssh --no-pager
+● ssh.service - OpenBSD Secure Shell server
+     Loaded: loaded (/lib/systemd/system/ssh.service; enabled; preset: enabled)
+     Active: active (running) since Fri 2026-09-18 10:15:00 UTC; 2s ago
+```
+
+### What this confirms
+
+| Check | Expected result | Meaning |
+|---|---|---|
+| Installation | `openssh-server` installed | The SSH server package is available. |
+| Enablement | `enabled` | SSH starts automatically at boot. |
+| Runtime state | `active` | The SSH daemon is currently running. |
+| Local connection | Successful login to `localhost` | The server accepts local SSH connections. |
 
 ## Practical Commands
 
 The following commands were used during the practical lab.
 
-### 1. Check OpenSSH Installation
+### 1. Update Package Information and Install OpenSSH
 
 ```bash
-# Check OpenSSH installation
-sudo apt install openssh-server
+sudo apt update
+sudo apt install -y openssh-server
 ```
 
-### 2. Enable and Start SSH
+### 2. Enable and Start the SSH Service
 
 ```bash
-# Enable and start SSH
 sudo systemctl enable --now ssh
 ```
 
-### 3. Check if SSH Is Active
+### 3. Check Whether SSH Is Active
 
 ```bash
-# Check if SSH is active
 systemctl is-active ssh
 ```
 
-### 4. Check SSH Service Status
+Expected output:
 
-```bash
-# Check SSH service status
-sudo systemctl status ssh
+```text
+active
 ```
 
-### 5. Test SSH Connection Locally
+### 4. View Detailed SSH Service Status
 
 ```bash
-# Test SSH connection locally
-ssh localhost
+sudo systemctl status ssh --no-pager
 ```
 
-### 6. Check Current User
+### 5. Test an SSH Connection Locally
+
+Replace `your_username` with a valid local account:
 
 ```bash
-# Check current user
+ssh your_username@localhost
+```
+
+> On the first connection, verify the host fingerprint and type `yes` when prompted. Enter `exit` after verifying the session.
+
+### 6. Display the Current User
+
+```bash
 whoami
 ```
 
-### 7. Exit SSH Session
+### 7. Exit the SSH Session
 
 ```bash
-# Exit SSH session
 exit
 ```
 
-### 8. Stop SSH Service
+### 8. Stop the SSH Service
 
 ```bash
-# Stop SSH service
 sudo systemctl stop ssh
 ```
 
-### 9. Check SSH Status
+### 9. Verify That SSH Is Stopped
 
 ```bash
-# Check SSH status
-sudo systemctl status ssh
+systemctl is-active ssh
 ```
 
-### 10. Start SSH Service
+Expected output:
+
+```text
+inactive
+```
+
+### 10. Start the SSH Service Again
 
 ```bash
-# Start SSH service
 sudo systemctl start ssh
 ```
 
-### 11. Check SSH Status Again
+### 11. Verify the Service After Restarting
 
 ```bash
-# Check SSH status again
-sudo systemctl status ssh
+sudo systemctl status ssh --no-pager
 ```
 
-### 12. Check SSH Root Login Configuration
+### 12. Inspect the Effective Root-Login Policy
+
+The `sshd -T` command displays the effective configuration, including settings inherited from included configuration files:
 
 ```bash
-# Check SSH root login configuration
-sudo grep PermitRootLogin /etc/ssh/sshd_config
+sudo sshd -T | grep -i '^permitrootlogin '
 ```
 
-### 13. Check if SSH Is Enabled
+For improved security, root login over SSH should normally be disabled or restricted according to the environment's security policy.
+
+### 13. Validate the SSH Configuration Before Reloading
 
 ```bash
-# Check if SSH is enabled
-sudo systemctl is-enabled ssh
+sudo sshd -t
 ```
 
-### 14. Check if SSH Is Active
+No output indicates that the configuration syntax is valid.
+
+### 14. Check Whether SSH Starts at Boot
 
 ```bash
-# Check if SSH is active
-sudo systemctl is-active ssh
+systemctl is-enabled ssh
 ```
 
-### 15. List Running Services
+Expected output:
+
+```text
+enabled
+```
+
+### 15. List Currently Running Services
 
 ```bash
-# List running services
-sudo systemctl list-units --type=service --state=running
+systemctl list-units --type=service --state=running --no-pager
 ```
-````
+
+## Expected Results
+
+- OpenSSH Server installs without errors.
+- The SSH service is enabled and starts automatically at boot.
+- `systemctl is-active ssh` returns `active`.
+- `systemctl is-enabled ssh` returns `enabled`.
+- `sshd -t` completes without output, confirming valid configuration syntax.
+- A local connection using `ssh your_username@localhost` succeeds when a valid account and authentication method are available.
+
+## Troubleshooting
+
+### SSH fails to start
+
+Check the service status and journal logs:
+
+```bash
+sudo systemctl status ssh --no-pager
+sudo journalctl -u ssh --no-pager -n 50
+```
+
+### Configuration changes are not accepted
+
+Validate the configuration before restarting the service:
+
+```bash
+sudo sshd -t
+```
+
+If the command reports an error, correct the referenced file and line before reloading SSH.
+
+### Authentication or login problems
+
+Review the SSH configuration and confirm that the account is permitted to log in:
+
+```bash
+sudo nano /etc/ssh/sshd_config
+sudo sshd -T | grep -E '^(passwordauthentication|pubkeyauthentication|permitrootlogin) '
+```
+
+After making a valid configuration change, reload the service without interrupting existing sessions:
+
+```bash
+sudo systemctl reload ssh
+```
+
+### SSH is blocked by a firewall
+
+If UFW is enabled, allow SSH according to the machine's security policy:
+
+```bash
+sudo ufw status
+sudo ufw allow OpenSSH
+```
+
+## Conclusion
+
+This lab demonstrates a fundamental Linux system administration task: securely managing remote access with SSH. The service is installed, enabled, verified, and tested using systemd, OpenSSH, and standard troubleshooting tools.
