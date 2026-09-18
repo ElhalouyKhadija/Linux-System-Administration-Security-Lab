@@ -1,19 +1,49 @@
-Phase 3 — SSH Service & Remote Access
+````markdown
+# Phase 3 — SSH Service & Remote Access
 
+## Practical Commands
+
+The following commands were used during the practical lab.
+
+### 1. Check the Company Directories
+
+```bash
 # Check the company directories
 ls /opt/company
+```
 
+### 2. Check OpenSSH Installation
+
+```bash
 # Check OpenSSH installation
 sudo apt install openssh-server
+```
 
+### 3. Enable and Start the SSH Service
+
+```bash
 # Enable and start the SSH service
 sudo systemctl enable --now ssh
+```
 
+### 4. Check if SSH Is Active
+
+```bash
 # Check if SSH is active
 systemctl is-active ssh
+```
 
+### 5. Test SSH Connection Locally
+
+```bash
 # Test SSH connection locally
 ssh localhost
+```
 
+### 6. Check the Current User
+
+```bash
 # Check the current user
 whoami
+```
+````
