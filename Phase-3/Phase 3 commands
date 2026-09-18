@@ -1,27 +1,57 @@
 # Phase 3 — SSH Service and Remote Access
 
 ## Objective
-This phase focuses on configuring and verifying the SSH service to enable secure remote access to the system.
+This phase demonstrates how to install, enable, and verify the SSH service so the system can support secure remote access.
+
+## Overview
+Secure Shell (SSH) is used to provide encrypted remote access to Linux systems. In this exercise, you will confirm the required directory structure, install the OpenSSH server, enable the service, and validate that SSH is functioning correctly.
 
 ## Procedure
 
 ### 1. Review the company directory structure
-Command: ls /opt/company
+Inspect the required directory layout:
 
-### 2. Install OpenSSH Server
-Command: sudo apt install openssh-server
+```bash
+ls /opt/company
+```
+
+### 2. Install the OpenSSH server
+Install the SSH service package:
+
+```bash
+sudo apt install openssh-server
+```
 
 ### 3. Enable and start the SSH service
-Command: sudo systemctl enable --now ssh
+Start the SSH daemon and ensure it is enabled on boot:
 
-### 4. Verify that the SSH service is active
-Command: systemctl is-active ssh
+```bash
+sudo systemctl enable --now ssh
+```
+
+### 4. Verify the SSH service status
+Check whether the service is running:
+
+```bash
+systemctl is-active ssh
+```
 
 ### 5. Test SSH access locally
-Command: ssh localhost
+Confirm that the system accepts local SSH connections:
 
-### 6. Confirm the currently logged-in user
-Command: whoami
+```bash
+ssh localhost
+```
+
+### 6. Confirm the active user
+Verify the current logged-in user identity:
+
+```bash
+whoami
+```
+
+## Expected Outcome
+After completing this phase, SSH should be installed, enabled, active, and available for secure local access. The system should also confirm the user context currently in use.
 
 ## Summary
-This exercise ensures that SSH is installed, enabled, running correctly, and ready to support secure remote access. It also confirms the identity of the active user.
+This exercise ensures that the SSH service is properly configured and operational, enabling secure remote administration while confirming the active system user.
