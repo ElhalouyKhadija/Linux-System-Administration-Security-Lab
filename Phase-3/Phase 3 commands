@@ -1,140 +1,19 @@
-# Phase 3 — SSH Service & Remote Access
+Phase 3 — SSH Service & Remote Access
 
-This phase focuses on installing, configuring, and verifying the **OpenSSH** service to provide secure remote access to a Linux system.
+# Check the company directories
+ls /opt/company
 
-## Lab Objectives
-
-- Install the OpenSSH server package
-- Enable and start the SSH service
-- Verify that SSH is active and enabled
-- Test a local SSH connection
-- Review SSH root-login configuration
-- Manage and inspect running system services
-
-## Practical Commands
-
-### 1. Install OpenSSH Server
-
-Installs the OpenSSH server package on the system.
-
-```bash
+# Check OpenSSH installation
 sudo apt install openssh-server
-```
 
-### 2. Enable and Start SSH
-
-Enables SSH to start automatically at boot and starts it immediately.
-
-```bash
+# Enable and start the SSH service
 sudo systemctl enable --now ssh
-```
 
-### 3. Check Whether SSH Is Active
-
-Returns the current active state of the SSH service.
-
-```bash
+# Check if SSH is active
 systemctl is-active ssh
-```
 
-### 4. Review SSH Service Status
-
-Displays detailed information about the SSH service, including its current state and recent logs.
-
-```bash
-sudo systemctl status ssh
-```
-
-### 5. Test Local SSH Access
-
-Tests whether the system can establish an SSH connection to itself.
-
-```bash
+# Test SSH connection locally
 ssh localhost
-```
 
-### 6. Check the Current User
-
-Displays the username of the currently logged-in user.
-
-```bash
+# Check the current user
 whoami
-```
-
-### 7. Exit the SSH Session
-
-Closes the current SSH session and returns to the previous shell.
-
-```bash
-exit
-```
-
-### 8. Stop the SSH Service
-
-Stops the SSH service temporarily.
-
-```bash
-sudo systemctl stop ssh
-```
-
-### 9. Confirm the SSH Service Status
-
-Verifies whether the SSH service has stopped successfully.
-
-```bash
-sudo systemctl status ssh
-```
-
-### 10. Start the SSH Service
-
-Starts the SSH service again.
-
-```bash
-sudo systemctl start ssh
-```
-
-### 11. Verify the SSH Service Status Again
-
-Confirms that the SSH service is running correctly.
-
-```bash
-sudo systemctl status ssh
-```
-
-### 12. Check Root Login Configuration
-
-Displays the `PermitRootLogin` setting from the SSH server configuration file.
-
-```bash
-sudo grep PermitRootLogin /etc/ssh/sshd_config
-```
-
-> **Security note:** Direct root login over SSH should generally be disabled. Administrative access should be performed using a standard user with `sudo` privileges.
-
-### 13. Verify Whether SSH Is Enabled
-
-Checks whether SSH is configured to start automatically when the system boots.
-
-```bash
-sudo systemctl is-enabled ssh
-```
-
-### 14. Confirm That SSH Is Active
-
-Performs a final check to confirm that the SSH service is currently running.
-
-```bash
-sudo systemctl is-active ssh
-```
-
-### 15. List Running Services
-
-Displays all currently running system services.
-
-```bash
-sudo systemctl list-units --type=service --state=running
-```
-
-## Lab Outcome
-
-The SSH service was installed, enabled, started, stopped, and verified successfully. These commands demonstrate the basic administration and security checks required to manage SSH remote access on a Linux system.
