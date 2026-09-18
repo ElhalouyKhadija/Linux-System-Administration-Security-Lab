@@ -1,0 +1,68 @@
+# Phase 4 — Firewall & Security Rules
+
+## Practical Commands
+
+The following command was used to inspect the current `iptables` firewall configuration on Kali Linux.
+
+### 1. Inspect the `iptables` Firewall Configuration
+
+```bash
+# Inspect the current iptables firewall configuration
+# -L: List the firewall rules
+# -n: Display IP addresses and ports numerically
+# -v: Display detailed information and packet/byte counters
+sudo iptables -L -n -v
+```
+
+### 2. Firewall Chains
+
+The command displays the main firewall chains:
+
+```text
+INPUT    → Traffic entering the system
+FORWARD  → Traffic passing through the system
+OUTPUT   → Traffic leaving the system
+```
+
+### 3. Default Firewall Policies
+
+The command also shows the default policy of each chain.
+
+In this practical test:
+
+```text
+INPUT policy:   ACCEPT
+FORWARD policy: ACCEPT
+OUTPUT policy:  ACCEPT
+```
+
+### 4. Firewall Rules and Counters
+
+No visible filtering rules were configured during this practical test.
+
+The packet and byte counters were:
+
+```text
+Packet counters: 0
+Byte counters:   0
+```
+
+This indicated that no visible `iptables` filtering rules had processed traffic during the check.
+
+## What I Learned
+
+Through this phase, I practiced:
+
+- `iptables`
+- Firewall rule inspection
+- INPUT chain
+- FORWARD chain
+- OUTPUT chain
+- Default firewall policies
+- Packet counters
+- Byte counters
+- Basic Linux firewall concepts
+
+## Practical Evidence
+
+The firewall configuration was inspected using `iptables`, and the results were documented with command output and screenshots from the Kali Linux lab.
