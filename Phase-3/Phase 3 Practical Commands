@@ -1,27 +1,71 @@
-# Phase 3 — SSH Service & Remote Access
+# Phase 3: SSH Service & Remote Access
 
-This section covers the installation, activation, verification, and troubleshooting of the OpenSSH service on a Linux system.
+> A practical guide to installing, configuring, verifying, and troubleshooting the OpenSSH server on a Linux system.
 
-## 1. Install OpenSSH
+---
+
+## Overview
+
+By completing this lab, you will learn how to:
+
+- Install the OpenSSH server package
+- Enable and manage the SSH service with `systemctl`
+- Verify the SSH daemon's status and configuration
+- Test a local SSH connection
+- Inspect SSH root-login settings
+- List currently running system services
+
+> **Distribution note:** The commands below are written for Debian- and Ubuntu-based systems that use `apt` and the service name `ssh`.
+
+---
+
+## Prerequisites
+
+- A Debian- or Ubuntu-based Linux system
+- A user account with `sudo` privileges
+- A terminal session
+
+---
+
+## 1. Install OpenSSH Server
+
+Install the OpenSSH server package:
 
 ```bash
-sudo apt install openssh-server
+sudo apt update
+sudo apt install -y openssh-server
 ```
 
-## 2. Enable and start the SSH service
+---
+
+## 2. Enable and Start the SSH Service
+
+Enable SSH to start automatically at boot and start it immediately:
 
 ```bash
 sudo systemctl enable --now ssh
 ```
 
-## 3. Verify the service status
+---
+
+## 3. Verify the Service Status
+
+Check whether the service is active, then display detailed status information:
 
 ```bash
 systemctl is-active ssh
 sudo systemctl status ssh
 ```
 
-## 4. Test the SSH connection locally
+A correctly configured service should report an **active** state.
+
+> Press `q` to exit the `systemctl status` view.
+
+---
+
+## 4. Test the SSH Connection Locally
+
+Connect to the local machine through SSH, verify the authenticated user, and close the session:
 
 ```bash
 ssh localhost
@@ -29,33 +73,90 @@ whoami
 exit
 ```
 
-## 5. Stop and start the SSH service
+When prompted, confirm the host key if this is the first connection. The `whoami` command should display the username used for the SSH session.
+
+---
+
+## 5. Stop and Start the SSH Service
+
+Stop the service and verify that it is inactive:
 
 ```bash
 sudo systemctl stop ssh
 sudo systemctl status ssh
+```
 
+Start the service again and confirm that it is running:
+
+```bash
 sudo systemctl start ssh
 sudo systemctl status ssh
 ```
 
-## 6. Check the SSH root-login configuration
+> **Warning:** Stopping SSH disconnects active remote sessions and prevents new SSH connections until the service is started again. Avoid running this step on a remote production system without an alternative access method.
+
+---
+
+## 6. Check the SSH Root-Login Configuration
+
+Inspect the effective root-login directives in the SSH daemon configuration file:
 
 ```bash
-sudo grep PermitRootLogin /etc/ssh/sshd_config
+sudo grep -E '^\s*#?\s*PermitRootLogin' /etc/ssh/sshd_config
 ```
 
-## 7. Confirm that SSH is enabled and active
+For improved security, direct root login is generally disabled. Prefer connecting with a regular user account and using `sudo` when administrative privileges are required.
+
+---
+
+## 7. Confirm That SSH Is Enabled and Active
+
+Verify both the startup configuration and the current runtime state:
 
 ```bash
 sudo systemctl is-enabled ssh
 sudo systemctl is-active ssh
 ```
 
-## 8. List all running services
+Expected results are typically:
+
+- `enabled` — SSH starts automatically during boot
+- `active` — SSH is currently running
+
+---
+
+## 8. List All Running Services
+
+Display all currently running services managed by `systemd`:
 
 ```bash
 sudo systemctl list-units --type=service --state=running
 ```
 
-> **Note:** These commands help verify that the SSH daemon is installed, enabled, running, and configured correctly.
+Use this command to confirm that `ssh.service` appears in the list of active services.
+
+---
+
+## Troubleshooting Checklist
+
+If SSH is not working, check the following:
+
+```bash
+# Check the service state
+sudo systemctl status ssh
+
+# View recent SSH service logs
+sudo journalctl -u ssh --no-pager -n 50
+
+# Validate the SSH daemon configuration
+sudo sshd -t
+
+# Confirm that SSH is listening on its configured port
+sudo ss -tulpn | grep ':22'
+```
+
+---
+
+## Summary
+
+These commands provide a complete workflow for installing, enabling, testing, and troubleshooting the OpenSSH service. Always validate configuration changes before restarting SSH, especially when working on a remote server.
