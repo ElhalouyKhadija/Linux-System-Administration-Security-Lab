@@ -1,41 +1,27 @@
-# Phase 3 — SSH Service & Remote Access
+# Phase 3 — SSH Service and Remote Access
 
 ## Objective
-Configure and verify the SSH service so the system can accept secure remote access.
+This phase focuses on configuring and verifying the SSH service to enable secure remote access to the system.
 
-## Lab Tasks
+## Procedure
 
-### 1. Review the Company Directory Structure
-```bash
-ls /opt/company
-```
+### 1. Review the company directory structure
+Command: ls /opt/company
 
 ### 2. Install OpenSSH Server
-```bash
-sudo apt install openssh-server
-```
+Command: sudo apt install openssh-server
 
-### 3. Enable and Start the SSH Service
-```bash
-sudo systemctl enable --now ssh
-```
+### 3. Enable and start the SSH service
+Command: sudo systemctl enable --now ssh
 
-### 4. Verify SSH Is Running
-```bash
-systemctl is-active ssh
-```
+### 4. Verify that the SSH service is active
+Command: systemctl is-active ssh
 
-### 5. Test SSH Access Locally
-```bash
-ssh localhost
-```
+### 5. Test SSH access locally
+Command: ssh localhost
 
-### 6. Confirm the Active User
-```bash
-whoami
-```
+### 6. Confirm the currently logged-in user
+Command: whoami
 
-## Notes
-- Ensure the SSH service is enabled before testing remote access.
-- `ssh localhost` validates local SSH connectivity.
-- `whoami` confirms the identity of the logged-in user.
+## Summary
+This exercise ensures that SSH is installed, enabled, running correctly, and ready to support secure remote access. It also confirms the identity of the active user.
