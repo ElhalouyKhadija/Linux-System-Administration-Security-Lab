@@ -81,4 +81,3 @@ sudo /usr/sbin/usermod -aG IT salesuser
 # Verify salesuser group membership
 id salesuser
 ```
-````

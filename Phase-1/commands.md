@@ -35,7 +35,7 @@ groupadd company
 # Create users
 useradd -m ituser
 useradd -m hruser
-useradd -m Salesuser
+useradd -m salesuser
 ```
 
 ### 5. Add Users to Groups
@@ -44,7 +44,7 @@ useradd -m Salesuser
 # Add users to groups
 usermod -aG IT,company ituser
 usermod -aG HR,company hruser
-usermod -aG Sales,company Salesuser
+usermod -aG Sales,company salesuser
 ```
 
 ### 6. Set Passwords
@@ -53,7 +53,7 @@ usermod -aG Sales,company Salesuser
 # Set passwords
 passwd ituser
 passwd hruser
-passwd Salesuser
+passwd salesuser
 ```
 
 ### 7. Verify Users
@@ -62,7 +62,7 @@ passwd Salesuser
 # Verify users
 id ituser
 id hruser
-id Salesuser
+id salesuser
 ```
 
 ### 8. Verify Groups
@@ -112,12 +112,12 @@ sudo -u ituser ls /opt/company/HR
 sudo -u hruser ls /opt/company/HR
 sudo -u hruser ls /opt/company/IT
 
-sudo -u Salesuser ls /opt/company/Sales
-sudo -u Salesuser ls /opt/company/IT
+sudo -u salesuser ls /opt/company/Sales
+sudo -u salesuser ls /opt/company/IT
 
 sudo -u ituser ls /opt/company/Shared
 sudo -u hruser ls /opt/company/Shared
-sudo -u Salesuser ls /opt/company/Shared
+sudo -u salesuser ls /opt/company/Shared
 ```
 
 ### 13. Test Write Permission

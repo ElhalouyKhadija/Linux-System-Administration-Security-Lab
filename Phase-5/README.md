@@ -159,7 +159,7 @@ By completing this phase, I learned how to:
 ## Evidence
 ![Phase 5 — Linux Security Checks](phase5-security-checks.jpeg)
 
-The practical work was performed on Kali Linux using the commands documented in the `Phase5 commands` file.
+The practical work was performed on Kali Linux using the commands documented in the `commands.md` file.
 
 One screenshot is included as visual evidence of the practical work performed during this phase.
 

@@ -179,7 +179,7 @@ SSH service: active
 ## Practical Evidence
 ![Phase 3 — SSH Service & Remote Access](phase3-ssh-service.jpeg)
 
-The practical work was performed on Kali Linux using the commands documented in the `Phase 3 commands` file.
+The practical work was performed on Kali Linux using the commands documented in the `commands.md` file.
 
 One screenshot is included as visual evidence of the SSH service and related practical work performed during this phase.
 
