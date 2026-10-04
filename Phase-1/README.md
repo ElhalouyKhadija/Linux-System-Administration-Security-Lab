@@ -222,6 +222,7 @@ The corrected command successfully displayed the company directory permissions.
 * Basic Linux troubleshooting
 
 ## Practical Evidence
+![Phase 1 — Users, Groups & Permissions](phase1-users-permissions.jpeg)
 
 The practical work was performed on Kali Linux using the commands documented in `commands.md`.
 

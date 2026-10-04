@@ -157,6 +157,7 @@ By completing this phase, I learned how to:
 * Verify group membership with `id`
 
 ## Evidence
+![Phase 5 — Linux Security Checks](phase5-security-checks.jpeg)
 
 The practical work was performed on Kali Linux using the commands documented in the `Phase5 commands` file.
 

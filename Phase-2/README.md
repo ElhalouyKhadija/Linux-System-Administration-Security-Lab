@@ -122,6 +122,7 @@ External Network Connectivity
 * HTTP/HTTPS connectivity
 
 ## Practical Evidence
+![Phase 2 — Network Configuration & Connectivity](phase2-network-connectivity.jpeg)
 
 The practical work was performed on Kali Linux using the network configuration and connectivity commands documented above.
 

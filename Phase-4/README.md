@@ -81,6 +81,7 @@ This phase demonstrated how to:
 * Document firewall observations without modifying the system.
 
 ## Evidence
+![Phase 4 — Firewall Inspection](phase4-firewall-inspection.jpeg)
 
 The practical work was performed on Kali Linux using the command shown above.
 

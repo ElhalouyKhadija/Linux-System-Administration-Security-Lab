@@ -177,6 +177,7 @@ SSH service: active
 * Applying basic SSH security considerations
 
 ## Practical Evidence
+![Phase 3 — SSH Service & Remote Access](phase3-ssh-service.jpeg)
 
 The practical work was performed on Kali Linux using the commands documented in the `Phase 3 commands` file.
 
