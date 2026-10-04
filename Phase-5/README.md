@@ -1,18 +1,18 @@
 # Phase 5 — Linux Security Checks
 
-> **Objective:** Perform and document basic security checks on Kali Linux, with a focus on SSH configuration, service status, file permissions, and user access controls.
+> **Objective:** Perform and document basic Linux security checks on Kali Linux, focusing on SSH configuration, service status, file permissions, and user access controls.
 
 ## Overview
 
 This phase focused on practical Linux security administration tasks, including:
 
-- Inspecting SSH root-login configuration
-- Verifying whether the SSH service is enabled and running
-- Reviewing active system services
-- Searching `/etc` for world-writable files
-- Validating directory access permissions
-- Troubleshooting an incorrectly entered command
-- Verifying supplementary group membership
+* Inspecting SSH root-login configuration
+* Verifying whether the SSH service is enabled and running
+* Reviewing active system services
+* Searching `/etc` for world-writable files
+* Validating directory access permissions
+* Troubleshooting an incorrectly entered command
+* Verifying supplementary group membership
 
 ## 1. SSH Configuration Check
 
@@ -28,7 +28,7 @@ sudo grep PermitRootLogin /etc/ssh/sshd_config
 #PermitRootLogin prohibit-password
 ```
 
-The directive is commented out, so the effective setting is determined by the applicable SSH defaults or any included configuration files. This check confirms that the root-login configuration was reviewed and should be validated against the complete SSH configuration when making security decisions.
+The directive is commented out, so the effective setting may depend on the applicable SSH defaults or included configuration files. This check confirmed that the root-login configuration was reviewed.
 
 ## 2. SSH Service Verification
 
@@ -41,12 +41,12 @@ sudo systemctl is-active ssh
 
 ### Results
 
-| Check | Result |
-|---|---|
-| Service enabled at boot | `enabled` |
-| Service currently running | `active` |
+| Check                     | Result    |
+| ------------------------- | --------- |
+| Service enabled at boot   | `enabled` |
+| Service currently running | `active`  |
 
-These results confirm that the SSH service is configured to start automatically and was running during the assessment.
+These results confirmed that the SSH service was configured to start automatically and was running during the assessment.
 
 ## 3. Running Services Review
 
@@ -56,7 +56,9 @@ All currently running system services were listed with:
 sudo systemctl list-units --type=service --state=running
 ```
 
-The output included the SSH service. Reviewing active services helps identify exposed or unnecessary services that may require further hardening.
+The output included the SSH service.
+
+Reviewing active services helps identify running services that may require further configuration or security hardening.
 
 ## 4. World-Writable File Check
 
@@ -68,7 +70,9 @@ sudo find /etc -maxdepth 1 -type f -perm -002 -ls
 
 ### Result
 
-No matching files were displayed during the test. This indicates that no world-writable regular files were found at the top level of `/etc` using the specified search criteria.
+No matching files were displayed during the test.
+
+This indicates that no world-writable regular files were found directly inside `/etc` using the specified search criteria.
 
 > **Scope note:** This command checks only regular files directly inside `/etc`; it does not recursively inspect files in subdirectories.
 
@@ -142,20 +146,24 @@ id salesuser
 
 By completing this phase, I learned how to:
 
-- Inspect SSH daemon configuration
-- Check whether a system service is enabled and active
-- Review currently running Linux services
-- Search for world-writable files
-- Test and interpret Linux directory permissions
-- Troubleshoot command-not-found errors
-- Locate executables using `which`
-- Add users to supplementary groups with `usermod`
-- Verify group membership with `id`
+* Inspect SSH daemon configuration
+* Check whether a system service is enabled and active
+* Review currently running Linux services
+* Search for world-writable files
+* Test and interpret Linux directory permissions
+* Troubleshoot command-not-found errors
+* Locate executables using `which`
+* Add users to supplementary groups with `usermod`
+* Verify group membership with `id`
 
 ## Evidence
 
-The practical work was completed on Kali Linux and verified through terminal commands and screenshots. Evidence should be retained alongside this documentation where applicable.
+The practical work was performed on Kali Linux using the commands documented in the `Phase5 commands` file.
+
+One screenshot is included as visual evidence of the practical work performed during this phase.
 
 ## Practical Status
 
 **Applied / Partially Applied**
+
+The documented checks were performed during the lab. The available visual evidence is limited to the screenshot included in this phase.
