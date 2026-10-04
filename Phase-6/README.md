@@ -83,7 +83,6 @@ The load-average values represent the system load over the previous **1, 5, and 
 ![Phase 6 — System Resources — Evidence 1](phase6-system-resources-1.jpeg)
 ![Phase 6 — System Resources — Evidence 2](phase6-system-resources-2.jpeg)
 ![Phase 6 — System Resources — Evidence 3](phase6-system-resources-3.jpeg)
-![Phase 6 — System Resources — Evidence 3](phase6-system-resources-3.jpeg)
 
 The practical work was performed on **Kali Linux** and verified using terminal commands and screenshots. The recorded results document the system's disk capacity, memory state, swap allocation, uptime, and load averages.
 

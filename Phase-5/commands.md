@@ -1,4 +1,3 @@
-````markdown id="q7n4mx"
 # Phase 5 — Linux Security Checks
 
 ## Practical Commands
