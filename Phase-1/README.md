@@ -2,9 +2,9 @@
 
 ## Objective
 
-The objective of this phase was to create a basic company structure on Linux using users, groups, directories, ownership, and permissions.
+The objective of this phase was to build and manage a basic company directory structure on Linux using users, groups, ownership, and file permissions.
 
-The practical lab was performed on **Kali Linux**.
+The practical lab was performed on Kali Linux.
 
 ## Company Directory Structure
 
@@ -18,20 +18,20 @@ The practical lab was performed on **Kali Linux**.
 
 ## Users
 
-- `ituser`
-- `hruser`
-- `salesuser`
+* `ituser`
+* `hruser`
+* `salesuser`
 
 ## Groups
 
-- `IT`
-- `HR`
-- `Sales`
-- `company`
+* `IT`
+* `HR`
+* `Sales`
+* `company`
 
 ## Permissions and Ownership
 
-The final directory permissions were:
+The final directory configuration was:
 
 ### HR
 
@@ -78,27 +78,27 @@ chmod 2770 /opt/company/Sales
 chmod 2770 /opt/company/Shared
 ```
 
-This gives the owner and group full access while denying access to others.
+This configuration gives the owner and group full access while denying access to other users.
 
-The **Setgid** bit also ensures that newly created files and directories inherit the directory's group.
+The Setgid bit ensures that newly created files and directories inherit the directory's group.
 
 ## Access Tests
 
-The permissions were tested with different users.
+Access permissions were tested using different users:
 
 ```text
-ituser  → IT       : Access successful
-ituser  → HR       : Permission denied
+ituser     → IT       : Access successful
+ituser     → HR       : Permission denied
 
-hruser  → HR       : Access successful
-hruser  → IT       : Permission denied
+hruser     → HR       : Access successful
+hruser     → IT       : Permission denied
 
-salesuser → Sales  : Access successful
-salesuser → IT     : Permission denied
+salesuser  → Sales    : Access successful
+salesuser  → IT       : Permission denied
 
-ituser  → Shared   : Access successful
-hruser  → Shared   : Access successful
-salesuser → Shared : Access successful
+ituser     → Shared   : Access successful
+hruser     → Shared   : Access successful
+salesuser  → Shared   : Access successful
 ```
 
 These tests confirmed that users could access their assigned department directory while access to other department directories was restricted.
@@ -117,7 +117,7 @@ The file was successfully created:
 -rw-rw-r-- 1 ituser IT 0 ... test.txt
 ```
 
-The test file was then removed after verification.
+The test file was removed after verification.
 
 ## Permission Verification
 
@@ -127,7 +127,7 @@ The final permissions were verified with:
 ls -ld /opt/company/*
 ```
 
-The result confirmed:
+The observed configuration confirmed:
 
 ```text
 drwxrws--- 2 root HR      ... /opt/company/HR
@@ -142,7 +142,7 @@ Additional verification was performed with:
 getfacl /opt/company/IT
 ```
 
-Result:
+Observed result:
 
 ```text
 owner: root
@@ -154,23 +154,23 @@ other::---
 
 ## Troubleshooting
 
-During the practical work, some command errors occurred and were corrected.
+Several command errors occurred during the practical work and were corrected.
 
 ### Command Typo
 
-An incorrect command was entered:
+An incorrect command was initially entered:
 
 ```bash
 sudo usermd -aG IT salesuser
 ```
 
-Result:
+The system returned:
 
 ```text
 sudo: usermd: command not found
 ```
 
-The correct command was identified with:
+The correct executable was located with:
 
 ```bash
 which usermod
@@ -182,7 +182,7 @@ Result:
 /usr/sbin/usermod
 ```
 
-The correct command was then executed:
+The command was then corrected and executed:
 
 ```bash
 sudo /usr/sbin/usermod -aG IT salesuser
@@ -190,7 +190,7 @@ sudo /usr/sbin/usermod -aG IT salesuser
 
 ### Path Typo
 
-Another path typo occurred:
+An incorrect path was also entered:
 
 ```bash
 ls -ld /company/*
@@ -202,32 +202,33 @@ The correct path was:
 ls -ld /opt/company/*
 ```
 
-This successfully displayed the company directory permissions.
+The corrected command successfully displayed the company directory permissions.
 
-## What I Learned
+## Skills Practiced
 
-Through this phase, I practiced:
-
-- Linux users and groups
-- `useradd`
-- `usermod`
-- `groupadd`
-- `id`
-- `groups`
-- `getent group`
-- `chown`
-- `chmod`
-- Linux ownership and permissions
-- Setgid permissions
-- Access testing
-- Basic Linux troubleshooting
+* Linux users and groups
+* `useradd`
+* `usermod`
+* `groupadd`
+* `id`
+* `groups`
+* `getent group`
+* `getfacl`
+* `chown`
+* `chmod`
+* Linux ownership and permissions
+* Setgid permissions
+* Access testing
+* Basic Linux troubleshooting
 
 ## Practical Evidence
 
-This phase includes practical commands, command results, access tests, permission verification, troubleshooting examples, and screenshots from the Kali Linux lab.
+The practical work was performed on Kali Linux using the commands documented in `commands.md`.
+
+One screenshot is included as visual evidence of the practical work performed during this phase.
 
 ## Practical Status
 
 **Applied / Completed**
 
-This phase was practically performed on Kali Linux and verified using commands, outputs, access tests, and screenshots.
+The company directory structure, users, groups, permissions, access tests, and troubleshooting tasks were practically performed and documented.
