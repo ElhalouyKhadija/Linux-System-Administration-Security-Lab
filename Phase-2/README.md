@@ -2,9 +2,9 @@
 
 ## Objective
 
-This phase focused on checking the network configuration and connectivity on **Kali Linux**.
+This phase focused on inspecting network configuration and testing network connectivity on Kali Linux.
 
-The objective was to inspect the network interface, IP configuration, routing, DNS settings, and external network connectivity.
+The objective was to review the network interface, IP addressing, routing, DNS configuration, and external network connectivity.
 
 ## Network Configuration
 
@@ -19,13 +19,13 @@ DNS server:      192.168.0.1
 
 ## Network Configuration Verification
 
-The network interface and IP address were checked using:
+The network interface and IP address were inspected using:
 
 ```bash
 ip addr
 ```
 
-The routing table was checked using:
+The routing table was inspected using:
 
 ```bash
 ip route
@@ -41,13 +41,13 @@ cat /etc/resolv.conf
 
 ### Test 1 — Google DNS
 
-The connection to `8.8.8.8` was tested with:
+Connectivity to `8.8.8.8` was tested using:
 
 ```bash
 ping -c 4 8.8.8.8
 ```
 
-Result:
+Observed result:
 
 ```text
 4 packets transmitted
@@ -55,21 +55,25 @@ Result:
 0% packet loss
 ```
 
+The test completed successfully with no packet loss.
+
 ### Test 2 — Cloudflare DNS
 
-The connection to `1.1.1.1` was tested with:
+Connectivity to `1.1.1.1` was tested using:
 
 ```bash
 ping -c 4 1.1.1.1
 ```
 
-Result:
+Observed result:
 
 ```text
 4 packets transmitted
 4 packets received
 0% packet loss
 ```
+
+The test completed successfully with no packet loss.
 
 ### Test 3 — HTTPS Connectivity
 
@@ -79,17 +83,17 @@ HTTPS connectivity was tested using:
 curl -I https://google.com
 ```
 
-Result:
+Observed result:
 
 ```text
 HTTP/2 301
 ```
 
-The response confirmed that the system could establish an HTTPS connection to the website.
+The received HTTP response confirmed successful HTTPS connectivity to the tested website.
 
 ## Network Concepts Practiced
 
-During this phase, the following concepts were examined:
+The practical work covered the following basic network path:
 
 ```text
 Network Interface
@@ -100,33 +104,31 @@ Default Gateway
         ↓
 DNS Configuration
         ↓
-Internet Connectivity
+External Network Connectivity
 ```
 
-## What I Learned
+## Skills Practiced
 
-Through this phase, I practiced:
-
-- Linux network interfaces
-- `ip addr`
-- IPv4 addressing
-- Subnet notation
-- Routing
-- Default gateway
-- `ip route`
-- DNS configuration
-- `/etc/resolv.conf`
-- Network connectivity testing
-- `ping`
-- `curl`
-- HTTP/HTTPS connectivity
+* Linux network interfaces
+* IPv4 addressing
+* Subnet notation
+* Routing
+* Default gateway configuration
+* DNS configuration
+* `/etc/resolv.conf`
+* Network connectivity testing
+* `ping`
+* `curl`
+* HTTP/HTTPS connectivity
 
 ## Practical Evidence
 
-This phase includes network configuration details, connectivity tests, command results, and screenshots collected from the Kali Linux lab.
+The practical work was performed on Kali Linux using the network configuration and connectivity commands documented above.
+
+One screenshot is included as visual evidence of the practical work performed during this phase.
 
 ## Practical Status
 
 **Applied / Completed**
 
-This phase was practically performed on Kali Linux and verified using network configuration commands, connectivity tests, command results, and screenshots.
+The network configuration and connectivity tests were performed and documented during the practical lab.
