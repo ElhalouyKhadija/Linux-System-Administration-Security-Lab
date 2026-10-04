@@ -79,10 +79,10 @@ getent group company
 
 ```bash
 # Set directory ownership
-chown root /opt/company/IT
-chown root /opt/company/HR
-chown root /opt/company/Sales
-chown root /opt/company/Shared
+chown root:IT /opt/company/IT
+chown root:HR /opt/company/HR
+chown root:Sales /opt/company/Sales
+chown root:company /opt/company/Shared
 ```
 
 ### 10. Set Permissions
